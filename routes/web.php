@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:groupeur'])->group(function () {
 
 // Espace Expéditeur
 Route::middleware(['auth', 'role:expediteur'])->prefix('expediteur')->name('expediteur.')->group(function () {
-    Route::get('/tableau-de-bord', fn () => view('dashboard'))->name('dashboard');
+    Route::get('/tableau-de-bord', fn () => view('expediteur.dashboard'))->name('dashboard');
 });
 
 // Espace Groupeur validé

@@ -16,11 +16,11 @@
         $links = [];
         if ($user?->isGroupeur()) {
             $links = [
-                ['dashboard', __('app.dashboard')],
+                ['groupeur.dashboard', 'Mon espace Groupeur'],
             ];
         } elseif ($user?->isExpediteur()) {
             $links = [
-                ['dashboard', __('app.dashboard')],
+                ['expediteur.dashboard', 'Mon espace Expéditeur'],
             ];
         }
     @endphp
