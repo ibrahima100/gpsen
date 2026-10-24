@@ -13,7 +13,8 @@
 <body class="font-sans antialiased min-h-screen" x-data="{ side: false }">
     @php
         $nav = [
-            ['dashboard', 'Tableau de bord'],
+            ['admin.dashboard', 'Tableau de bord'],
+            ['admin.groupeurs.index', 'Validation groupeurs'],
         ];
     @endphp
 
