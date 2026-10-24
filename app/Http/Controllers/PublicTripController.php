@@ -75,11 +75,17 @@ class PublicTripController extends Controller
     {
         $trip->load(['groupeur.groupeurProfile']);
         $remainingCapacity = $this->capacityService->getRemainingCapacity($trip);
+        $recentReviews = \App\Models\Review::with('author')
+            ->where('target_id', $trip->groupeur_id)
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('trajets.show', [
             'trip' => $trip,
             'remainingCapacity' => $remainingCapacity,
             'capacityService' => $this->capacityService,
+            'recentReviews' => $recentReviews,
         ]);
     }
 }

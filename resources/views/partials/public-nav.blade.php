@@ -13,6 +13,7 @@
         <div class="hidden md:flex items-center gap-3">
             <x-language-switcher />
             @auth
+                <x-notification-bell />
                 <x-button href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</x-button>
             @else
                 <a href="{{ route('login') }}" class="gp-link">{{ __('app.login') }}</a>

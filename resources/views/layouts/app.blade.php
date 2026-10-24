@@ -40,6 +40,7 @@
 
             <div class="hidden md:flex items-center gap-3">
                 <x-language-switcher />
+                <x-notification-bell />
                 <span class="text-sm text-gp-warm">{{ $user?->name }}</span>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -56,6 +57,14 @@
                 <a href="{{ route($route) }}" class="block gp-link">{{ $label }}</a>
             @endforeach
             <a href="{{ route('profile.edit') }}" class="block gp-link">{{ __('app.profile') }}</a>
+            <a href="{{ route('notifications.index') }}" class="block gp-link flex items-center justify-between">
+                <span>Notifications</span>
+                @if(auth()->user()?->unreadNotifications->count() > 0)
+                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-gp-orange text-white">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
+            </a>
             <x-language-switcher />
             <form method="POST" action="{{ route('logout') }}">@csrf
                 <x-button type="submit" variant="secondary">{{ __('app.logout') }}</x-button>

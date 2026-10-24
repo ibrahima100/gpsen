@@ -12,11 +12,11 @@
             <p class="text-[11px] text-gp-warm mt-1">Dossiers et pièces d'identité en attente</p>
         </a>
 
-        <div class="gp-card p-5">
+        <a href="{{ route('admin.users.index') }}" class="gp-card p-5 hover:border-gp-orange transition block">
             <span class="text-xs font-bold uppercase tracking-wider text-gp-warm">Total utilisateurs</span>
             <p class="mt-2 text-3xl font-extrabold text-gp-ink">{{ $totalUsers }}</p>
             <p class="text-[11px] text-gp-warm mt-1">Expéditeurs et groupeurs inscrits</p>
-        </div>
+        </a>
 
         <div class="gp-card p-5">
             <span class="text-xs font-bold uppercase tracking-wider text-gp-warm">Trajets ouverts</span>
@@ -24,11 +24,16 @@
             <p class="text-[11px] text-gp-warm mt-1">Actuellement disponibles aux envois</p>
         </div>
 
-        <div class="gp-card p-5">
-            <span class="text-xs font-bold uppercase tracking-wider text-gp-warm">Signalements</span>
-            <p class="mt-2 text-3xl font-extrabold text-gp-ink">0</p>
-            <p class="text-[11px] text-gp-warm mt-1">File de modération (Étape 6)</p>
-        </div>
+        <a href="{{ route('admin.reports.index') }}" class="gp-card p-5 hover:border-gp-orange transition block">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-gp-warm">Signalements</span>
+                @if($openReports > 0)
+                    <span class="text-xs font-bold text-red-600">Action requise</span>
+                @endif
+            </div>
+            <p class="mt-2 text-3xl font-extrabold {{ $openReports > 0 ? 'text-red-600' : 'text-gp-ink' }}">{{ $openReports }}</p>
+            <p class="text-[11px] text-gp-warm mt-1">File de modération active</p>
+        </a>
     </div>
 
     <!-- Section d'actions prioritaires selon UI/UX §5.9 -->

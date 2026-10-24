@@ -82,6 +82,9 @@
                         @endforelse
                     </div>
                 </div>
+
+                <!-- Avis et Évaluation (Étape 6) -->
+                @include('partials.shipment-review-section', ['request' => $request])
             </div>
 
             <!-- Colonne droite : Groupeur et Contact WhatsApp conditionnel (§5.7) -->

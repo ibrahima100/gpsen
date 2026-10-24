@@ -81,6 +81,45 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Avis récents sur le groupeur (§5.5 & Étape 6) -->
+                <div class="bg-white p-6 rounded-gp border border-gp-border shadow-sm space-y-4">
+                    <div class="flex items-center justify-between pb-2 border-b border-gp-border">
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-gp-ink flex items-center gap-2">
+                            <span>★</span> Avis des expéditeurs sur {{ $trip->groupeur->name }}
+                        </h2>
+                        <span class="text-xs text-gp-warm font-semibold">
+                            {{ $trip->groupeur->groupeurProfile?->ratings_count ?? 0 }} avis
+                        </span>
+                    </div>
+
+                    @if(isset($recentReviews) && $recentReviews->isNotEmpty())
+                        <div class="space-y-3">
+                            @foreach($recentReviews as $rev)
+                                <div class="p-3.5 bg-gp-sand/20 rounded-gp border border-gp-border/60">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xs font-bold text-gp-ink">{{ $rev->author->name }}</span>
+                                            <span class="text-[11px] text-gp-warm/70">{{ $rev->created_at->translatedFormat('d M Y') }}</span>
+                                        </div>
+                                        <span class="text-xs font-bold text-gp-orange">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                {{ $i <= $rev->rating ? '★' : '☆' }}
+                                            @endfor
+                                        </span>
+                                    </div>
+                                    @if($rev->comment)
+                                        <p class="text-xs text-gp-warm mt-1.5 italic">"{{ $rev->comment }}"</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="p-4 bg-gp-sand/20 rounded-gp border border-gp-border/50 text-center">
+                            <p class="text-xs text-gp-warm">Ce groupeur n'a pas encore reçu d'avis public. Ses voyages précédents ont été vérifiés par l'équipe GPsen.</p>
+                        </div>
+                    @endif
+                </div>
             </div>
 
             <!-- Colonne latérale : Bloc Groupeur vérifié et Action (§5.5) -->
@@ -114,6 +153,15 @@
                     <div class="text-[11px] text-gp-warm p-3 bg-orange-50 border border-orange-200 rounded-gp">
                         🔒 Le numéro direct WhatsApp du groupeur sera débloqué automatiquement dès que votre demande aura été acceptée.
                     </div>
+
+                    @auth
+                        <div class="pt-2 text-center border-t border-gp-border/50">
+                            <a href="{{ route('reports.create', ['user_id' => $trip->groupeur_id, 'trip_id' => $trip->id]) }}" class="text-[11px] text-gp-warm hover:text-red-600 transition flex items-center justify-center gap-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                <span>Signaler une anomalie sur ce trajet</span>
+                            </a>
+                        </div>
+                    @endauth
                 </div>
 
                 <!-- Bouton fixe / Action principale selon AppFlow & §5.5 -->

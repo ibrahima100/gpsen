@@ -12,9 +12,12 @@
 </head>
 <body class="font-sans antialiased min-h-screen" x-data="{ side: false }">
     @php
+        $pendingReportsCount = \App\Models\Report::where('status', 'ouvert')->count();
         $nav = [
-            ['admin.dashboard', 'Tableau de bord'],
-            ['admin.groupeurs.index', 'Validation groupeurs'],
+            ['admin.dashboard', 'Tableau de bord', 0],
+            ['admin.groupeurs.index', 'Validation groupeurs', \App\Models\GroupeurProfile::where('validation_status', 'en_attente')->count()],
+            ['admin.reports.index', 'Signalements', $pendingReportsCount],
+            ['admin.users.index', 'Utilisateurs', 0],
         ];
     @endphp
 
@@ -25,9 +28,16 @@
                 <span class="bg-gp-sand rounded-gp px-2 py-1"><x-logo :text="false" /></span><span class="text-xs font-semibold text-gp-border">Admin</span>
             </div>
             <nav class="flex-1 p-4 space-y-1" aria-label="Administration">
-                @foreach ($nav as [$route, $label])
+                @foreach ($nav as [$route, $label, $badge])
                     <a href="{{ route($route) }}"
-                       class="block px-3 py-2 rounded-gp text-sm font-semibold transition {{ request()->routeIs($route) ? 'bg-gp-orange text-white' : 'hover:bg-white/10' }}">{{ $label }}</a>
+                       class="flex items-center justify-between px-3 py-2 rounded-gp text-sm font-semibold transition {{ request()->routeIs($route.'*') ? 'bg-gp-orange text-white' : 'hover:bg-white/10' }}">
+                        <span>{{ $label }}</span>
+                        @if($badge > 0)
+                            <span class="px-2 py-0.5 rounded-full text-xs font-bold {{ request()->routeIs($route.'*') ? 'bg-white text-gp-orange' : 'bg-gp-orange text-white' }}">
+                                {{ $badge }}
+                            </span>
+                        @endif
+                    </a>
                 @endforeach
                 <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-gp text-sm font-semibold hover:bg-white/10 transition">{{ __('app.profile') }}</a>
             </nav>
@@ -45,6 +55,7 @@
                 <h1 class="font-bold text-lg">{{ $header ?? 'Administration' }}</h1>
                 <div class="flex items-center gap-3">
                     <x-language-switcher />
+                    <x-notification-bell />
                     <span class="hidden sm:inline text-sm text-gp-warm">{{ auth()->user()?->name }}</span>
                 </div>
             </header>

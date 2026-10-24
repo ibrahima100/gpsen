@@ -31,15 +31,6 @@ class Review extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'rating' => 'integer',
-    ];
-
-    /**
      * Get the attributes that should be cast (Laravel 11+ syntax support).
      *
      * @return array<string, string>

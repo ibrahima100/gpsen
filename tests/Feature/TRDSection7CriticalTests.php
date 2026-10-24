@@ -266,3 +266,81 @@ test('TRD-8 : Le lien WhatsApp n est pas visible avant acceptation', function ()
         ->assertSee('Contacter sur WhatsApp')
         ->assertSee('wa.me');
 });
+
+// 9. Un avis n'est possible que sur une demande livrée, et une seule fois par partie
+test('TRD-9 : Un avis n est possible que sur une demande livree et une seule fois', function () {
+    $groupeur = User::factory()->create(['role' => Role::groupeur, 'phone' => '+221 77 111 22 33']);
+    $profile = $groupeur->groupeurProfile()->create([
+        'bio' => 'Groupeur pro',
+        'id_document_path' => 'p.pdf',
+        'validation_status' => GroupeurStatus::valide,
+        'average_rating' => 0.0,
+        'ratings_count' => 0,
+    ]);
+
+    $trip = Trip::create([
+        'groupeur_id' => $groupeur->id,
+        'origin_country' => 'SN',
+        'origin_city' => 'Dakar',
+        'destination_country' => 'FR',
+        'destination_city' => 'Paris',
+        'departure_date' => now()->addDays(3),
+        'capacity_kg' => 20,
+        'price_per_kg' => 5000,
+        'status' => TripStatus::ouvert,
+    ]);
+
+    $expediteur = User::factory()->create(['role' => Role::expediteur]);
+    $stranger = User::factory()->create(['role' => Role::expediteur]);
+
+    $request = ShipmentRequest::create([
+        'trip_id' => $trip->id,
+        'sender_id' => $expediteur->id,
+        'description' => 'Colis test avis',
+        'category' => 'vetements',
+        'weight_kg' => 3,
+        'receiver_name' => 'Jean',
+        'receiver_phone' => '0601020304',
+        'receiver_city' => 'Paris',
+        'status' => RequestStatus::en_transit, // Non livrée !
+    ]);
+
+    // 1. Rejet si la demande n'est pas livrée
+    $this->actingAs($expediteur)->post("/demandes/{$request->id}/avis", [
+        'rating' => 5,
+        'comment' => 'Super voyageur !',
+    ])->assertStatus(422);
+
+    // 2. Passage à livrée
+    $request->update(['status' => RequestStatus::livree]);
+
+    // 3. Rejet si utilisateur non partie prenante
+    $this->actingAs($stranger)->post("/demandes/{$request->id}/avis", [
+        'rating' => 4,
+        'comment' => 'Je ne suis pas le client...',
+    ])->assertStatus(403);
+
+    // 4. Succès pour l'expéditeur
+    $this->actingAs($expediteur)->post("/demandes/{$request->id}/avis", [
+        'rating' => 5,
+        'comment' => 'Livraison rapide et soignée, merci !',
+    ])->assertRedirect();
+
+    $this->assertDatabaseHas('reviews', [
+        'shipment_request_id' => $request->id,
+        'author_id' => $expediteur->id,
+        'target_id' => $groupeur->id,
+        'rating' => 5,
+    ]);
+
+    // Vérifier recalcul note groupeur
+    $profile->refresh();
+    expect((float)$profile->average_rating)->toBe(5.0);
+    expect($profile->ratings_count)->toBe(1);
+
+    // 5. Rejet d'un deuxième avis par le même expéditeur sur la même livraison (unicité)
+    $this->actingAs($expediteur)->post("/demandes/{$request->id}/avis", [
+        'rating' => 4,
+        'comment' => 'Deuxième tentative non autorisée',
+    ])->assertStatus(422);
+});

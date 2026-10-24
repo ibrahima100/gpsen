@@ -82,6 +82,9 @@
                         @endforeach
                     </ul>
                 </div>
+
+                <!-- Avis et Évaluation (Étape 6) -->
+                @include('partials.shipment-review-section', ['request' => $request])
             </div>
 
             <!-- Colonne droite : Actions de gestion et contact WhatsApp direct -->

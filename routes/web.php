@@ -111,7 +111,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         $pendingGroupeurs = \App\Models\GroupeurProfile::where('validation_status', 'en_attente')->count();
         $totalUsers = \App\Models\User::count();
         $openTrips = \App\Models\Trip::where('status', 'ouvert')->count();
-        return view('admin.dashboard', compact('pendingGroupeurs', 'totalUsers', 'openTrips'));
+        $openReports = \App\Models\Report::where('status', 'ouvert')->count();
+        return view('admin.dashboard', compact('pendingGroupeurs', 'totalUsers', 'openTrips', 'openReports'));
     })->name('dashboard');
 
     // File de validation des pièces d'identité groupeurs
@@ -120,6 +121,33 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/groupeurs/{profile}/piece-identite', [GroupeurValidationController::class, 'viewDocument'])->name('groupeurs.document');
     Route::post('/groupeurs/{profile}/valider', [GroupeurValidationController::class, 'validateProfile'])->name('groupeurs.validate');
     Route::post('/groupeurs/{profile}/refuser', [GroupeurValidationController::class, 'rejectProfile'])->name('groupeurs.reject');
+
+    // Modération des signalements
+    Route::get('/signalements', [\App\Http\Controllers\Admin\ReportManagementController::class, 'index'])->name('reports.index');
+    Route::get('/signalements/{report}', [\App\Http\Controllers\Admin\ReportManagementController::class, 'show'])->name('reports.show');
+    Route::post('/signalements/{report}', [\App\Http\Controllers\Admin\ReportManagementController::class, 'update'])->name('reports.update');
+
+    // Supervision des utilisateurs
+    Route::get('/utilisateurs', [\App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users.index');
+    Route::post('/utilisateurs/{user}/toggle-status', [\App\Http\Controllers\Admin\UserManagementController::class, 'toggleStatus'])->name('users.toggleStatus');
+});
+
+// Notifications
+Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index'])->name('index');
+    Route::post('/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('read');
+    Route::post('/mark-all-read', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('markAllRead');
+});
+
+// Avis sur colis livrés
+Route::post('/demandes/{shipmentRequest}/avis', [\App\Http\Controllers\ReviewController::class, 'store'])
+    ->middleware('auth')
+    ->name('reviews.store');
+
+// Signalements utilisateurs / trajets / colis
+Route::middleware('auth')->group(function () {
+    Route::get('/signalement', [\App\Http\Controllers\ReportController::class, 'create'])->name('reports.create');
+    Route::post('/signalement', [\App\Http\Controllers\ReportController::class, 'store'])->name('reports.store');
 });
 
 // Profil utilisateur
