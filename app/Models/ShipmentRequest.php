@@ -49,6 +49,7 @@ class ShipmentRequest extends Model
     protected $casts = [
         'weight_kg' => 'decimal:2',
         'declared_value' => 'integer',
+        'status' => \App\Enums\RequestStatus::class,
         'accepted_at' => 'datetime',
         'delivered_at' => 'datetime',
     ];
@@ -63,6 +64,7 @@ class ShipmentRequest extends Model
         return [
             'weight_kg' => 'decimal:2',
             'declared_value' => 'integer',
+            'status' => \App\Enums\RequestStatus::class,
             'accepted_at' => 'datetime',
             'delivered_at' => 'datetime',
         ];

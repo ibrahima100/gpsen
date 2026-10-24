@@ -1,11 +1,17 @@
 <?php
 
 use App\Http\Controllers\Admin\GroupeurValidationController;
+use App\Http\Controllers\Expediteur\ShipmentRequestController;
 use App\Http\Controllers\Groupeur\TripController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicTripController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+// Zone publique (Visiteur / Tous)
+Route::get('/', [PublicTripController::class, 'home'])->name('home');
+Route::get('/trajets', [PublicTripController::class, 'index'])->name('trajets.index');
+Route::get('/trajets/{trip}', [PublicTripController::class, 'show'])->name('trajets.show');
+Route::view('/comment-ca-marche', 'pages.how-it-works')->name('how-it-works');
 
 // Changement de langue (FR / EN)
 Route::get('/langue/{locale}', function (string $locale) {
@@ -63,6 +69,10 @@ Route::middleware(['auth', 'role:groupeur'])->group(function () {
 // Espace Expéditeur
 Route::middleware(['auth', 'role:expediteur'])->prefix('expediteur')->name('expediteur.')->group(function () {
     Route::get('/tableau-de-bord', fn () => view('expediteur.dashboard'))->name('dashboard');
+
+    // Demandes d'envoi de colis
+    Route::get('/trajets/{trip}/demande', [ShipmentRequestController::class, 'create'])->name('requests.create');
+    Route::post('/trajets/{trip}/demande', [ShipmentRequestController::class, 'store'])->name('requests.store');
 });
 
 // Espace Groupeur validé
