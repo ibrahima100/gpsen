@@ -1,61 +1,60 @@
 <x-guest-layout title="Inscription">
-    <h2 class="text-2xl font-extrabold text-gp-ink">Créer un compte</h2>
-    <p class="text-sm text-gp-warm mt-1">Choisissez votre profil pour commencer sur GPsen.</p>
-
-    <div class="mt-5 grid grid-cols-2 p-1 rounded-gp bg-gp-sand text-sm font-bold" role="tablist">
-        <a href="{{ route('login') }}" class="text-center py-2 rounded-lg text-gp-ink hover:text-gp-orange-dark transition">Connexion</a>
-        <span class="text-center py-2 rounded-lg bg-gp-ink text-white">Inscription</span>
+    <div class="mb-6">
+        <h2 class="text-3xl font-extrabold text-gp-ink tracking-tight">Rejoindre GPsen</h2>
+        <p class="text-sm text-gp-warm mt-1.5 leading-relaxed">
+            Choisissez votre profil pour continuer sur la plateforme de groupage participatif.
+        </p>
     </div>
 
-    <div class="mt-6 space-y-4">
+    <div class="grid grid-cols-2 p-1 rounded-gp bg-gp-sand text-sm font-bold mb-6" role="tablist">
+        <a href="{{ route('login') }}" class="text-center py-2.5 rounded-lg text-gp-ink hover:text-gp-orange-dark transition">Connexion</a>
+        <span class="text-center py-2.5 rounded-lg bg-gp-ink text-white shadow-sm">Inscription</span>
+    </div>
+
+    <!-- Deux grandes cartes côte à côte (empilées sur mobile) selon document UI/UX §5.2 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Carte Expéditeur -->
-        <a href="{{ route('register.expediteur') }}" class="group block p-5 rounded-gp border-2 border-gp-border hover:border-gp-orange bg-white hover:bg-gp-sand/30 transition shadow-sm">
-            <div class="flex items-start gap-4">
-                <div class="w-12 h-12 rounded-xl bg-gp-sand flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition">
-                    📦
+        <a href="{{ route('register.expediteur') }}" class="group flex flex-col justify-between p-6 rounded-gp border-2 border-gp-border hover:border-gp-orange bg-white hover:bg-orange-50/20 transition-all shadow-sm duration-200">
+            <div>
+                <div class="w-12 h-12 rounded-xl bg-gp-sand flex items-center justify-center text-gp-ink text-xl font-black mb-4 group-hover:bg-gp-orange group-hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-extrabold text-base text-gp-ink group-hover:text-gp-orange-dark">Je suis Expéditeur</h3>
-                        <span class="text-gp-orange-dark font-bold text-sm">Choisir &rarr;</span>
-                    </div>
-                    <p class="text-xs text-gp-warm mt-1 leading-relaxed">
-                        J'ai des colis, plis ou bagages à faire acheminer vers le Sénégal ou l'international.
-                    </p>
-                    <div class="mt-2 flex flex-wrap gap-2 text-[11px] font-semibold text-gp-warm">
-                        <span class="px-2 py-0.5 rounded-full bg-gp-sand/80">Recherche de trajets</span>
-                        <span class="px-2 py-0.5 rounded-full bg-gp-sand/80">Suivi en direct</span>
-                        <span class="px-2 py-0.5 rounded-full bg-gp-sand/80">Sans vérification d'identité</span>
-                    </div>
-                </div>
+                <h3 class="text-lg font-extrabold text-gp-ink group-hover:text-gp-orange-dark tracking-tight leading-snug">
+                    « J'envoie mes colis moins cher »
+                </h3>
+                <p class="text-xs text-gp-warm mt-2 leading-relaxed">
+                    Partagez l'espace d'un voyageur vérifié et suivez votre colis en temps réel.
+                </p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gp-border/60 flex items-center justify-between">
+                <span class="text-xs font-bold text-gp-orange-dark">Je suis expéditeur</span>
+                <span class="text-gp-orange font-black group-hover:translate-x-1 transition">&rarr;</span>
             </div>
         </a>
 
         <!-- Carte Groupeur -->
-        <a href="{{ route('register.groupeur') }}" class="group block p-5 rounded-gp border-2 border-gp-border hover:border-gp-orange bg-white hover:bg-gp-sand/30 transition shadow-sm">
-            <div class="flex items-start gap-4">
-                <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition">
-                    ✈️
+        <a href="{{ route('register.groupeur') }}" class="group flex flex-col justify-between p-6 rounded-gp border-2 border-gp-border hover:border-gp-orange bg-white hover:bg-orange-50/20 transition-all shadow-sm duration-200">
+            <div>
+                <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-gp-orange-dark text-xl font-black mb-4 group-hover:bg-gp-orange group-hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <div class="flex-1">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-extrabold text-base text-gp-ink group-hover:text-gp-orange-dark">Je suis Groupeur</h3>
-                        <span class="text-gp-orange-dark font-bold text-sm">Choisir &rarr;</span>
-                    </div>
-                    <p class="text-xs text-gp-warm mt-1 leading-relaxed">
-                        Je voyage ou transporte du fret, je vends mes kilos disponibles pour rentabiliser mes déplacements.
-                    </p>
-                    <div class="mt-2 flex flex-wrap gap-2 text-[11px] font-semibold text-gp-orange-dark">
-                        <span class="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200">Publication de trajets</span>
-                        <span class="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200">Pièce d'identité requise</span>
-                        <span class="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200">Profil vérifié par l'admin</span>
-                    </div>
-                </div>
+                <h3 class="text-lg font-extrabold text-gp-ink group-hover:text-gp-orange-dark tracking-tight leading-snug">
+                    « Mes kilos libres deviennent des revenus »
+                </h3>
+                <p class="text-xs text-gp-warm mt-2 leading-relaxed">
+                    Publiez votre trajet, fixez vos conditions et rentabilisez vos kilos de bagages.
+                </p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gp-border/60 flex items-center justify-between">
+                <span class="text-xs font-bold text-gp-orange-dark">Je suis groupeur</span>
+                <span class="text-gp-orange font-black group-hover:translate-x-1 transition">&rarr;</span>
             </div>
         </a>
     </div>
 
-    <p class="mt-6 text-center text-xs text-gp-warm">
-        En vous inscrivant, vous acceptez les règles de sécurité et de modération de GPsen.
-    </p>
+    <div class="mt-8 text-center text-xs text-gp-warm">
+        Déjà inscrit ? <a href="{{ route('login') }}" class="text-gp-orange-dark underline font-bold hover:text-gp-orange">Se connecter</a>
+    </div>
 </x-guest-layout>

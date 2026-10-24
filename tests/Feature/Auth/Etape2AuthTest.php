@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Storage;
 test('la page de choix d inscription s affiche correctement', function () {
     $response = $this->get('/inscription');
     $response->assertStatus(200);
-    $response->assertSee('Je suis Expéditeur');
-    $response->assertSee('Je suis Groupeur');
+    $response->assertSee('Je suis expéditeur');
+    $response->assertSee('Je suis groupeur');
+    $response->assertSee('envoie mes colis moins cher', false);
+    $response->assertSee('Mes kilos libres deviennent des revenus', false);
 });
 
 test('un expediteur peut s inscrire avec 4 champs', function () {
