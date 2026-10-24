@@ -42,6 +42,22 @@ Route::middleware(['auth', 'role:groupeur'])->group(function () {
             'profile' => $user->groupeurProfile,
         ]);
     })->name('groupeur.waiting');
+
+    Route::post('/groupeur/nouvelle-soumission', function (\Illuminate\Http\Request $request) {
+        $request->validate([
+            'id_document' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+        ]);
+
+        $path = $request->file('id_document')->store('id_documents', 'local');
+        $user = auth()->user();
+        $user->groupeurProfile()->update([
+            'id_document_path' => $path,
+            'validation_status' => \App\Enums\GroupeurStatus::en_attente,
+            'rejection_reason' => null,
+        ]);
+
+        return back()->with('success', 'Votre nouveau document a bien été enregistré. Il est de nouveau en cours d\'examen.');
+    })->name('groupeur.resubmit');
 });
 
 // Espace Expéditeur
@@ -62,7 +78,7 @@ Route::middleware(['auth', 'role:groupeur', 'groupeur.validated'])->prefix('grou
 
     // CRUD Trajets groupeur (alias en français /nouveau)
     Route::get('trajets/nouveau', [TripController::class, 'create'])->name('trips.nouveau');
-    Route::resource('trajets', TripController::class)->names('trips')->except(['show', 'destroy']);
+    Route::resource('trajets', TripController::class)->parameters(['trajets' => 'trip'])->names('trips')->except(['show', 'destroy']);
     Route::post('trajets/{trip}/annuler', [TripController::class, 'cancel'])->name('trips.cancel');
 });
 

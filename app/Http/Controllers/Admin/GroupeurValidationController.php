@@ -65,6 +65,9 @@ class GroupeurValidationController extends Controller
             'validated_at' => now(),
         ]);
 
+        // Notification groupeur validé (Canal BDD Laravel)
+        $profile->user->notify(new \App\Notifications\GroupeurValidatedNotification());
+
         return redirect()->route('admin.groupeurs.show', $profile)
             ->with('success', "Le groupeur {$profile->user->name} a été validé avec succès.");
     }
@@ -87,6 +90,9 @@ class GroupeurValidationController extends Controller
             'validated_by' => auth()->id(),
             'validated_at' => now(),
         ]);
+
+        // Notification groupeur refusé (Canal BDD Laravel)
+        $profile->user->notify(new \App\Notifications\GroupeurRejectedNotification($request->rejection_reason));
 
         return redirect()->route('admin.groupeurs.show', $profile)
             ->with('warning', "Le dossier de {$profile->user->name} a été refusé avec motif notifié.");

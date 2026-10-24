@@ -25,9 +25,18 @@
                         </p>
                     </div>
 
-                    <p class="mt-6 text-xs text-gp-warm">
-                        Pour soumettre une nouvelle pièce d'identité ou contester ce refus, écrivez au support GPsen ou reconnectez-vous après mise à jour.
-                    </p>
+                    <div class="mt-6 p-5 bg-white border border-gp-border rounded-gp text-left">
+                        <h4 class="font-bold text-sm text-gp-ink mb-2">Mettre à jour mon justificatif d'identité</h4>
+                        <p class="text-xs text-gp-warm mb-3">Téléversez un document lisible et conforme (PDF, JPG, PNG) pour soumettre à nouveau votre dossier.</p>
+
+                        <form method="POST" action="{{ route('groupeur.resubmit') }}" enctype="multipart/form-data" class="space-y-3">
+                            @csrf
+                            <input type="file" name="id_document" required accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-xs text-gp-warm file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-gp-ink file:text-white hover:file:bg-gp-orange file:cursor-pointer transition" />
+                            <button type="submit" class="px-5 py-2.5 rounded-gp bg-gp-orange hover:bg-gp-orange-dark text-white text-xs font-bold uppercase tracking-wider transition shadow-sm">
+                                Soumettre à nouveau pour examen
+                            </button>
+                        </form>
+                    </div>
                 @else
                     <!-- En attente -->
                     <div class="w-16 h-16 bg-orange-100 text-gp-orange rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-pulse">
