@@ -43,6 +43,7 @@ class GroupeurProfile extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'validation_status' => GroupeurStatus::class,
         'validated_at' => 'datetime',
         'average_rating' => 'decimal:2',
         'ratings_count' => 'integer',
@@ -57,12 +58,14 @@ class GroupeurProfile extends Model
     protected function casts(): array
     {
         return [
+            'validation_status' => GroupeurStatus::class,
             'validated_at' => 'datetime',
             'average_rating' => 'decimal:2',
             'ratings_count' => 'integer',
             'delivered_count' => 'integer',
         ];
     }
+
 
     /**
      * Relationship: The user who owns this groupeur profile.
@@ -85,8 +88,8 @@ class GroupeurProfile extends Model
      */
     public function isPending(): bool
     {
-        return $this->validation_status === 'en_attente'
-            || (class_exists(GroupeurStatus::class) && $this->validation_status === GroupeurStatus::EN_ATTENTE);
+        return $this->validation_status === GroupeurStatus::en_attente
+            || $this->validation_status === 'en_attente';
     }
 
     /**
@@ -94,8 +97,8 @@ class GroupeurProfile extends Model
      */
     public function isValidated(): bool
     {
-        return $this->validation_status === 'valide'
-            || (class_exists(GroupeurStatus::class) && $this->validation_status === GroupeurStatus::VALIDE);
+        return $this->validation_status === GroupeurStatus::valide
+            || $this->validation_status === 'valide';
     }
 
     /**
@@ -103,7 +106,7 @@ class GroupeurProfile extends Model
      */
     public function isRefused(): bool
     {
-        return $this->validation_status === 'refuse'
-            || (class_exists(GroupeurStatus::class) && $this->validation_status === GroupeurStatus::REFUSE);
+        return $this->validation_status === GroupeurStatus::refuse
+            || $this->validation_status === 'refuse';
     }
 }

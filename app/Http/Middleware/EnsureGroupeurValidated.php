@@ -30,12 +30,12 @@ class EnsureGroupeurValidated
         $userRoleValue = $user->role instanceof Role ? $user->role->value : (string) $user->role;
 
         // 2. Administrators bypass validation check
-        if ($userRoleValue === Role::ADMIN->value) {
+        if ($userRoleValue === Role::admin->value) {
             return $next($request);
         }
 
         // 3. User must be a groupeur
-        if ($userRoleValue !== Role::GROUPEUR->value) {
+        if ($userRoleValue !== Role::groupeur->value) {
             abort(Response::HTTP_FORBIDDEN, __('Accès réservé aux transporteurs/groupeurs.'));
         }
 
@@ -44,7 +44,7 @@ class EnsureGroupeurValidated
         $status = $profile?->validation_status;
         $statusValue = $status instanceof GroupeurStatus ? $status->value : (string) $status;
 
-        if ($statusValue !== GroupeurStatus::VALIDE->value) {
+        if ($statusValue !== GroupeurStatus::valide->value) {
             return redirect('/groupeur/attente-validation');
         }
 
