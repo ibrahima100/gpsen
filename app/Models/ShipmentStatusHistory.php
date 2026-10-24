@@ -94,4 +94,12 @@ class ShipmentStatusHistory extends Model
     {
         return $this->belongsTo(User::class, 'changed_by');
     }
+
+    /**
+     * Alias for author of the status change.
+     */
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'changed_by');
+    }
 }

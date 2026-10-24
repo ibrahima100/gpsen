@@ -83,8 +83,8 @@ test('Parcours A -> E complet : Visiteur decouvre, recherche, ouvre un trajet, s
         'receiver_city' => 'Paris',
     ]);
 
-    // Redirigé vers son espace avec message de succès
-    $demandeResponse->assertRedirect('/expediteur/tableau-de-bord');
+    // Redirigé vers sa liste de demandes avec message de succès
+    $demandeResponse->assertRedirect(route('expediteur.demandes.index'));
     $demandeResponse->assertSessionHas('success');
 
     // 7. Vérifications en base : demande créée en attente + notification groupeur

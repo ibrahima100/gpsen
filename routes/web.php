@@ -71,6 +71,10 @@ Route::middleware(['auth', 'role:expediteur'])->prefix('expediteur')->name('expe
     Route::get('/tableau-de-bord', fn () => view('expediteur.dashboard'))->name('dashboard');
 
     // Demandes d'envoi de colis
+    Route::get('/demandes', [ShipmentRequestController::class, 'index'])->name('demandes.index');
+    Route::get('/demandes/{shipmentRequest}', [ShipmentRequestController::class, 'show'])->name('demandes.show');
+    Route::post('/demandes/{shipmentRequest}/annuler', [ShipmentRequestController::class, 'cancel'])->name('demandes.cancel');
+
     Route::get('/trajets/{trip}/demande', [ShipmentRequestController::class, 'create'])->name('requests.create');
     Route::post('/trajets/{trip}/demande', [ShipmentRequestController::class, 'store'])->name('requests.store');
 });
@@ -80,11 +84,20 @@ Route::middleware(['auth', 'role:groupeur', 'groupeur.validated'])->prefix('grou
     Route::get('/tableau-de-bord', function () {
         $user = auth()->user();
         $activeTripsCount = $user->trips()->whereIn('status', ['ouvert', 'complet', 'parti'])->count();
+        $pendingRequestsCount = \App\Models\ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', $user->id))->where('status', 'en_attente')->count();
         return view('groupeur.dashboard', [
             'user' => $user,
             'activeTripsCount' => $activeTripsCount,
+            'pendingRequestsCount' => $pendingRequestsCount,
         ]);
     })->name('dashboard');
+
+    // Gestion des demandes reçues par le groupeur
+    Route::get('/demandes', [\App\Http\Controllers\Groupeur\GroupeurShipmentController::class, 'index'])->name('demandes.index');
+    Route::get('/demandes/{shipmentRequest}', [\App\Http\Controllers\Groupeur\GroupeurShipmentController::class, 'show'])->name('demandes.show');
+    Route::post('/demandes/{shipmentRequest}/accepter', [\App\Http\Controllers\Groupeur\GroupeurShipmentController::class, 'accept'])->name('demandes.accept');
+    Route::post('/demandes/{shipmentRequest}/refuser', [\App\Http\Controllers\Groupeur\GroupeurShipmentController::class, 'reject'])->name('demandes.reject');
+    Route::post('/demandes/{shipmentRequest}/statut', [\App\Http\Controllers\Groupeur\GroupeurShipmentController::class, 'updateStatus'])->name('demandes.updateStatus');
 
     // CRUD Trajets groupeur (alias en français /nouveau)
     Route::get('trajets/nouveau', [TripController::class, 'create'])->name('trips.nouveau');

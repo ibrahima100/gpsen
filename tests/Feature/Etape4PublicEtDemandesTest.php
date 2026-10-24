@@ -122,7 +122,7 @@ test('expediteur peut envoyer une demande d envoi sur un trajet avec capacite su
         'receiver_city' => 'Paris',
     ]);
 
-    $response->assertRedirect('/expediteur/tableau-de-bord');
+    $response->assertRedirect(route('expediteur.demandes.index'));
 
     $demande = ShipmentRequest::where('trip_id', $trip->id)->first();
     expect($demande)->not->toBeNull();

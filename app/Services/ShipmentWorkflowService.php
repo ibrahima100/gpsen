@@ -151,17 +151,22 @@ class ShipmentWorkflowService
             // 6. Saves the request (persists any remaining model changes)
             $request->save();
 
-            // 7. Sends appropriate notification (use a simple try/catch to not block on notification failure)
+            // 7. Sends appropriate notification
             try {
-                // TODO: Send notification based on $newStatus:
-                // - 'acceptee'   => notify sender: RequestAcceptedNotification
-                // - 'refusee'    => notify sender: RequestRefusedNotification
-                // - 'collectee'  => notify sender: PackageCollectedNotification
-                // - 'en_transit' => notify sender: ShipmentInTransitNotification
-                // - 'livree'     => notify sender: ShipmentDeliveredNotification
-                // - 'annulee'    => notify groupeur: RequestCancelledNotification
+                if ($newStatus === 'acceptee') {
+                    $request->sender->notify(new \App\Notifications\RequestAcceptedNotification($request));
+                } elseif ($newStatus === 'refusee') {
+                    $request->sender->notify(new \App\Notifications\RequestRefusedNotification($request, $note));
+                } elseif (in_array($newStatus, ['collectee', 'en_transit', 'livree'], true)) {
+                    $labels = [
+                        'collectee' => 'Collecté',
+                        'en_transit' => 'En transit (En cours d\'acheminement)',
+                        'livree' => 'Livré à destination',
+                    ];
+                    $request->sender->notify(new \App\Notifications\ShipmentStatusUpdatedNotification($request, $labels[$newStatus] ?? $newStatus));
+                }
             } catch (Throwable) {
-                // Notifications will be created later; swallow failure so transaction succeeds
+                // Notifications will be gracefully handled without breaking transaction
             }
 
             // Return true on success
