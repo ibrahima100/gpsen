@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border; }
+    .badge-pending   { @apply bg-amber-50 text-amber-800 border-amber-200; }
+    .badge-accepted  { @apply bg-emerald-50 text-emerald-800 border-emerald-200; }
+    .badge-refused   { @apply bg-red-50 text-red-700 border-red-200; }
+    .badge-transit   { @apply bg-sky-50 text-sky-800 border-sky-200; }
+    .badge-delivered { @apply bg-gp-sand text-gp-ink border-gp-border; }
+
+    .gp-card { @apply bg-gp-cream border border-gp-border rounded-gp shadow-sm; }
+    .gp-link { @apply text-gp-warm hover:text-gp-orange font-medium transition-colors; }
+}
+
+body { @apply bg-gp-sand-light text-gp-ink; }
+
+[x-cloak] { display: none !important; }
