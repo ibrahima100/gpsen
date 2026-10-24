@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\GroupeurValidationController;
+use App\Http\Controllers\Groupeur\TripController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,12 +51,36 @@ Route::middleware(['auth', 'role:expediteur'])->prefix('expediteur')->name('expe
 
 // Espace Groupeur validé
 Route::middleware(['auth', 'role:groupeur', 'groupeur.validated'])->prefix('groupeur')->name('groupeur.')->group(function () {
-    Route::get('/tableau-de-bord', fn () => view('dashboard'))->name('dashboard');
+    Route::get('/tableau-de-bord', function () {
+        $user = auth()->user();
+        $activeTripsCount = $user->trips()->whereIn('status', ['ouvert', 'complet', 'parti'])->count();
+        return view('groupeur.dashboard', [
+            'user' => $user,
+            'activeTripsCount' => $activeTripsCount,
+        ]);
+    })->name('dashboard');
+
+    // CRUD Trajets groupeur (alias en français /nouveau)
+    Route::get('trajets/nouveau', [TripController::class, 'create'])->name('trips.nouveau');
+    Route::resource('trajets', TripController::class)->names('trips')->except(['show', 'destroy']);
+    Route::post('trajets/{trip}/annuler', [TripController::class, 'cancel'])->name('trips.cancel');
 });
 
 // Espace Administrateur
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/tableau-de-bord', fn () => view('admin.dashboard'))->name('dashboard');
+    Route::get('/tableau-de-bord', function () {
+        $pendingGroupeurs = \App\Models\GroupeurProfile::where('validation_status', 'en_attente')->count();
+        $totalUsers = \App\Models\User::count();
+        $openTrips = \App\Models\Trip::where('status', 'ouvert')->count();
+        return view('admin.dashboard', compact('pendingGroupeurs', 'totalUsers', 'openTrips'));
+    })->name('dashboard');
+
+    // File de validation des pièces d'identité groupeurs
+    Route::get('/groupeurs', [GroupeurValidationController::class, 'index'])->name('groupeurs.index');
+    Route::get('/groupeurs/{profile}', [GroupeurValidationController::class, 'show'])->name('groupeurs.show');
+    Route::get('/groupeurs/{profile}/piece-identite', [GroupeurValidationController::class, 'viewDocument'])->name('groupeurs.document');
+    Route::post('/groupeurs/{profile}/valider', [GroupeurValidationController::class, 'validateProfile'])->name('groupeurs.validate');
+    Route::post('/groupeurs/{profile}/refuser', [GroupeurValidationController::class, 'rejectProfile'])->name('groupeurs.reject');
 });
 
 // Profil utilisateur

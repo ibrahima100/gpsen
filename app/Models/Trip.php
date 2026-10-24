@@ -46,6 +46,7 @@ class Trip extends Model
         'arrival_date' => 'date',
         'capacity_kg' => 'decimal:2',
         'price_per_kg' => 'integer',
+        'status' => \App\Enums\TripStatus::class,
     ];
 
     /**
@@ -60,6 +61,7 @@ class Trip extends Model
             'arrival_date' => 'date',
             'capacity_kg' => 'decimal:2',
             'price_per_kg' => 'integer',
+            'status' => \App\Enums\TripStatus::class,
         ];
     }
 
