@@ -38,13 +38,23 @@ class GroupeurValidationController extends Controller
     }
 
     /**
-     * Visualisation sécurisée de la pièce d'identité (stockage privé).
+     * Visualisation sécurisée de la pièce d'identité (stockage privé avec audit).
      */
-    public function viewDocument(GroupeurProfile $profile): StreamedResponse
+    public function viewDocument(Request $request, GroupeurProfile $profile): StreamedResponse
     {
         if (! Storage::disk('local')->exists($profile->id_document_path)) {
             abort(404, 'Document introuvable sur le disque privé.');
         }
+
+        // Journalisation de sécurité de l'accès au document
+        \App\Models\DocumentAccessLog::create([
+            'admin_id' => auth()->id(),
+            'groupeur_profile_id' => $profile->id,
+            'document_path' => $profile->id_document_path,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
 
         return Storage::disk('local')->response(
             $profile->id_document_path,

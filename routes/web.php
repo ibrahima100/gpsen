@@ -12,6 +12,8 @@ Route::get('/', [PublicTripController::class, 'home'])->name('home');
 Route::get('/trajets', [PublicTripController::class, 'index'])->name('trajets.index');
 Route::get('/trajets/{trip}', [PublicTripController::class, 'show'])->name('trajets.show');
 Route::view('/comment-ca-marche', 'pages.how-it-works')->name('how-it-works');
+Route::view('/conditions-generales', 'pages.cgu')->name('legal.cgu');
+Route::view('/confidentialite-et-donnees-personnelles', 'pages.confidentialite')->name('legal.privacy');
 
 // Changement de langue (FR / EN)
 Route::get('/langue/{locale}', function (string $locale) {

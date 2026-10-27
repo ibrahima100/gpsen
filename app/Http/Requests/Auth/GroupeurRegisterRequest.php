@@ -26,7 +26,7 @@ class GroupeurRegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'max:25', new \App\Rules\SenegalPhone()],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'bio' => ['required', 'string', 'min:20', 'max:1000'],
             'usual_routes' => ['nullable', 'string', 'max:255'],
