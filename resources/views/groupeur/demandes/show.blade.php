@@ -161,12 +161,23 @@
                             </button>
                         </form>
                     @elseif($currentStatus === 'en_transit')
-                        <!-- Passer à livree -->
-                        <form method="POST" action="{{ route('groupeur.demandes.updateStatus', $request) }}">
+                        <!-- Passer à livree avec validation OTP -->
+                        <form method="POST" action="{{ route('groupeur.demandes.updateStatus', $request) }}" class="space-y-3">
                             @csrf
                             <input type="hidden" name="status" value="livree">
+                            @if($request->delivery_code)
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-gp-ink mb-1">
+                                        Code de remise à 4 chiffres (fourni par le destinataire)
+                                    </label>
+                                    <input type="text" name="delivery_code" required maxlength="6" placeholder="Ex. 1234" class="w-full text-center font-mono font-bold text-sm tracking-widest rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange">
+                                    @error('delivery_code')
+                                        <p class="text-[11px] text-red-600 mt-1 font-semibold">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            @endif
                             <button type="submit" class="w-full py-3 rounded-gp bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm">
-                                ✅ Marquer comme Livré (remis au destinataire)
+                                ✅ Valider la remise & marquer comme Livré
                             </button>
                         </form>
                     @elseif($currentStatus === 'livree')

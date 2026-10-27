@@ -126,8 +126,19 @@ class GroupeurShipmentController extends Controller
 
         $request->validate([
             'status' => ['required', 'string', 'in:collectee,en_transit,livree'],
+            'delivery_code' => ['nullable', 'string'],
             'note' => ['nullable', 'string', 'max:255'],
         ]);
+
+        // Si passage à livrée : validation du code de remise à 4 chiffres (OTP)
+        if ($request->status === 'livree' && ! empty($shipmentRequest->delivery_code)) {
+            $inputCode = trim((string) $request->input('delivery_code'));
+            if ($inputCode !== $shipmentRequest->delivery_code) {
+                return back()->withErrors([
+                    'delivery_code' => 'Code de remise incorrect. Veuillez demander au destinataire le code à 4 chiffres fourni par GPsen.',
+                ]);
+            }
+        }
 
         $this->workflowService->transition($shipmentRequest, $request->status, auth()->user(), $request->note);
 

@@ -143,11 +143,22 @@
                     </div>
 
                     <div class="flex items-center justify-between text-xs pt-2 border-t border-gp-border/60">
-                        <span class="text-gp-warm">Note moyenne :</span>
-                        <span class="font-bold text-gp-ink flex items-center gap-1">
-                            {{ number_format($trip->groupeur->groupeurProfile?->average_rating ?? 5.0, 1) }}
-                            <span class="text-amber-500 font-bold">★</span>
-                        </span>
+                        <span class="text-gp-warm">Évaluation :</span>
+                        @php
+                            $ratingsCount = $trip->groupeur->groupeurProfile?->ratings_count ?? 0;
+                            $avgRating = $trip->groupeur->groupeurProfile?->average_rating;
+                        @endphp
+                        @if($ratingsCount > 0)
+                            <span class="font-bold text-gp-ink flex items-center gap-1">
+                                {{ number_format($avgRating, 1) }}
+                                <span class="text-amber-500 font-bold">★</span>
+                                <span class="text-[11px] text-gp-warm">({{ $ratingsCount }} avis)</span>
+                            </span>
+                        @else
+                            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-gp-sand text-gp-ink">
+                                Nouveau voyageur
+                            </span>
+                        @endif
                     </div>
 
                     <div class="text-[11px] text-gp-warm p-3 bg-orange-50 border border-orange-200 rounded-gp">

@@ -99,9 +99,12 @@ class ShipmentWorkflowService
                 $request->decision_note = $note;
             }
 
-            // 2. If $newStatus === 'acceptee': set accepted_at = now()
+            // 2. If $newStatus === 'acceptee': set accepted_at = now() and generate 4-digit delivery_code
             if ($newStatus === 'acceptee') {
                 $request->accepted_at = now();
+                if (empty($request->delivery_code)) {
+                    $request->delivery_code = (string) random_int(1000, 9999);
+                }
             }
 
             // 3. If $newStatus === 'livree': set delivered_at = now(), increment groupeur's delivered_count

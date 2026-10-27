@@ -103,14 +103,29 @@
 
                     @php
                         $isAccepted = in_array($request->status?->value ?? (string)$request->status, ['acceptee', 'collectee', 'en_transit', 'livree']);
-                        $cleanPhone = preg_replace('/[^0-9]/', '', $groupeur->phone);
-                        $waText = urlencode("Bonjour {$groupeur->name}, je vous contacte depuis GPsen concernant mon colis de {$request->weight_kg} kg sur votre trajet {$trip->origin_city} -> {$trip->destination_city}.");
+                        $waMsg = \App\Services\WhatsAppService::generatePackageMessage(
+                            $groupeur->name,
+                            $request->sender->name,
+                            (float) $request->weight_kg,
+                            "{$trip->origin_city} -> {$trip->destination_city}",
+                            $request->delivery_code
+                        );
+                        $waUrl = \App\Services\WhatsAppService::buildLink($groupeur->phone, $waMsg);
                     @endphp
 
                     @if($isAccepted)
+                        <!-- Code de remise sécurisé à 4 chiffres (OTP) -->
+                        @if($request->delivery_code)
+                            <div class="p-3 bg-gp-sand/40 border border-gp-border rounded-gp text-center">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-gp-warm block">Code de remise sécurisé (OTP)</span>
+                                <span class="text-xl font-extrabold tracking-widest text-gp-ink font-mono mt-1 block">{{ $request->delivery_code }}</span>
+                                <p class="text-[10px] text-gp-warm mt-1">À communiquer au voyageur lors de la livraison pour certifier la remise.</p>
+                            </div>
+                        @endif
+
                         <!-- Bouton WhatsApp débloqué selon §5.7 -->
                         <div class="pt-2">
-                            <a href="https://wa.me/{{ $cleanPhone }}?text={{ $waText }}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-gp bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center justify-center gap-2 text-center">
+                            <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-gp bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center justify-center gap-2 text-center">
                                 <span>📱</span> Contacter sur WhatsApp
                             </a>
                             <p class="text-[11px] text-gp-warm text-center mt-1.5">

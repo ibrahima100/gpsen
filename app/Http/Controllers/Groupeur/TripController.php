@@ -76,6 +76,17 @@ class TripController extends Controller
     {
         $this->authorize('update', $trip);
 
+        $newCapacity = (float) $request->validated('capacity_kg');
+        $bookedWeight = (float) $trip->shipmentRequests()
+            ->whereIn('status', ['acceptee', 'collectee', 'en_transit'])
+            ->sum('weight_kg');
+
+        if ($newCapacity < $bookedWeight) {
+            return back()->withErrors([
+                'capacity_kg' => "La capacité totale ({$newCapacity} kg) ne peut pas être inférieure au poids déjà engagé sur ce trajet ({$bookedWeight} kg).",
+            ])->withInput();
+        }
+
         $trip->update($request->validated());
         $this->capacityService->updateTripStatus($trip);
 
