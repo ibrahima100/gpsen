@@ -5,9 +5,9 @@
         </a>
 
         <nav class="hidden md:flex items-center gap-6" aria-label="Navigation principale">
-            <a href="/" class="gp-link">{{ __('app.home') }}</a>
-            <a href="#comment-ca-marche" class="gp-link">{{ __('app.how_it_works') }}</a>
-            <a href="#trajets" class="gp-link">{{ __('app.trips') }}</a>
+            <a href="{{ route('home') }}" class="gp-link">{{ __('app.home') }}</a>
+            <a href="{{ route('home') }}#comment-ca-marche" class="gp-link">{{ __('app.how_it_works') }}</a>
+            <a href="{{ route('trajets.index') }}" class="gp-link">{{ __('app.trips') }}</a>
         </nav>
 
         <div class="hidden md:flex items-center gap-3">
@@ -27,9 +27,9 @@
     </div>
 
     <div x-show="open" x-transition x-cloak class="md:hidden border-t border-gp-border px-4 py-4 space-y-3 bg-gp-cream">
-        <a href="/" class="block gp-link">{{ __('app.home') }}</a>
-        <a href="#comment-ca-marche" class="block gp-link">{{ __('app.how_it_works') }}</a>
-        <a href="#trajets" class="block gp-link">{{ __('app.trips') }}</a>
+        <a href="{{ route('home') }}" class="block gp-link">{{ __('app.home') }}</a>
+        <a href="{{ route('home') }}#comment-ca-marche" class="block gp-link">{{ __('app.how_it_works') }}</a>
+        <a href="{{ route('trajets.index') }}" class="block gp-link">{{ __('app.trips') }}</a>
         <div class="flex items-center gap-3 pt-2">
             <x-language-switcher />
             @auth

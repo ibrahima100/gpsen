@@ -41,7 +41,7 @@
     </section>
 
     <!-- Trajets récents disponibles (§5.1 : 3 à 6 cartes) -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
+    <section id="trajets" class="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h2 class="text-2xl font-extrabold text-gp-ink tracking-tight">Prochains départs confirmés</h2>
@@ -112,7 +112,7 @@
     </section>
 
     <!-- Comment ça marche en 3 étapes asymétriques (UI/UX §5.1) -->
-    <section class="bg-gp-sand/40 border-y border-gp-border py-16">
+    <section id="comment-ca-marche" class="bg-gp-sand/40 border-y border-gp-border py-16 scroll-mt-20">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center max-w-xl mx-auto mb-12">
                 <span class="text-xs font-bold uppercase tracking-wider text-gp-orange-dark">Simplicité & Sécurité</span>
