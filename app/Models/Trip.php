@@ -37,20 +37,7 @@ class Trip extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'departure_date' => 'date',
-        'arrival_date' => 'date',
-        'capacity_kg' => 'decimal:2',
-        'price_per_kg' => 'integer',
-        'status' => \App\Enums\TripStatus::class,
-    ];
-
-    /**
-     * Get the attributes that should be cast (Laravel 11+ syntax support).
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */

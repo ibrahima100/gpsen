@@ -18,6 +18,11 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/app/private/*
+!/storage/app/private/.gitignore
+*.zip
+*.tar.gz
+*.sql
 /vendor
 Homestead.json
 Homestead.yaml

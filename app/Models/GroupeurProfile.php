@@ -38,20 +38,7 @@ class GroupeurProfile extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'validation_status' => GroupeurStatus::class,
-        'validated_at' => 'datetime',
-        'average_rating' => 'decimal:2',
-        'ratings_count' => 'integer',
-        'delivered_count' => 'integer',
-    ];
-
-    /**
-     * Get the attributes that should be cast (Laravel 11+ syntax support).
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */

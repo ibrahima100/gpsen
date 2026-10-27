@@ -1,59 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# GPsen — Plateforme de Groupage Participatif de Colis
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Projet de Mémoire de Licence 3 — Génie Logiciel (ESTM, Dakar)  
+> Stack technique : **Laravel 11**, **Blade**, **Tailwind CSS**, **Alpine.js**, **MySQL (utf8mb4)**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Installation rapide en 5 commandes
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Prérequis : **PHP 8.2+**, **Composer**, **Node.js 18+**, **MySQL**.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+# 1. Cloner et entrer dans le projet
+git clone https://github.com/ibrahima100/gpsen.git && cd gpsen/gpsen
 
-## Learning Laravel
+# 2. Installer les dépendances PHP et JavaScript
+composer install && npm install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# 3. Préparer l'environnement et générer la clé
+cp .env.example .env && php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# 4. Exécuter les migrations et le jeu de données démo
+php artisan migrate:fresh --seed
 
-## Laravel Sponsors
+# 5. Compiler les assets et démarrer le serveur
+npm run build && php artisan serve --port=8000
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+L'application est disponible sur **http://localhost:8000**.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🔑 Comptes de démonstration
 
-## Contributing
+Tous les comptes de test sont initialisés avec les identifiants suivants :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Rôle | Nom | Email | Mot de passe | Description |
+|---|---|---|---|---|
+| **Administrateur** | Admin GPsen | `admin@gpsen.sn` | `Admin@2026` | Validation CNI, modération signalements, gestion utilisateurs |
+| **Groupeur (validé)** | Fatou Ndiaye | `fatou@gpsen.sn` | `Demo@2026` | Trajets Dakar–Paris avec avis 5 étoiles |
+| **Groupeur (validé)** | Moussa Sow | `moussa@gpsen.sn` | `Demo@2026` | Trajets Dakar–Milan |
+| **Groupeur (en attente)**| Cheikh Fall | `cheikh@gpsen.sn` | `Demo@2026` | Compte soumis, en attente d'approbation CNI |
+| **Groupeur (refusé)** | Ibrahima Ba | `ibrahima@gpsen.sn` | `Demo@2026` | Compte refusé avec motif d'aide |
+| **Expéditeur** | Aminata Diop | `aminata@gpsen.sn` | `Demo@2026` | Demandes créées, en cours et livrées |
+| **Expéditeur** | Omar Gueye | `omar@gpsen.sn` | `Demo@2026` | Suivi colis et auteur de signalement |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🧪 Tests automatisés
 
-## Security Vulnerabilities
+Pour exécuter l'ensemble de la suite de tests et les tests critiques :
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan test
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📂 Architecture et Sécurité
+
+- **Pièces d'identité CNI / Passeport** : Stockées de manière isolée sur le disque local privé (`storage/app/private/id_documents`), jamais accessibles via l'URL publique. Consultation réservée à l'administrateur par flux sécurisé contrôlé.
+- **Transactions & Verrous** : Verrou pessimiste `lockForUpdate` pour empêcher toute surréservation de capacité sur les trajets.
+- **Confidentialité WhatsApp** : Numéro et lien direct masqués avant acceptation de la demande d'envoi.
+- **Machine à états stricte** : `en_attente` → `acceptee` → `collectee` → `en_transit` → `livree`.

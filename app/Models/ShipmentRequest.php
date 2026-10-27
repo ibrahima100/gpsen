@@ -42,20 +42,7 @@ class ShipmentRequest extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'weight_kg' => 'decimal:2',
-        'declared_value' => 'integer',
-        'status' => \App\Enums\RequestStatus::class,
-        'accepted_at' => 'datetime',
-        'delivered_at' => 'datetime',
-    ];
-
-    /**
-     * Get the attributes that should be cast (Laravel 11+ syntax support).
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */

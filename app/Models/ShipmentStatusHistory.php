@@ -47,16 +47,7 @@ class ShipmentStatusHistory extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-    ];
-
-    /**
-     * Get the attributes that should be cast (Laravel 11+ syntax support).
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */

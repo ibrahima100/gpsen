@@ -38,19 +38,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'role' => Role::class,
-        'status' => 'string',
-    ];
-
-    /**
-     * Get the attributes that should be cast (Laravel 11+ syntax support).
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */
