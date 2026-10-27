@@ -53,7 +53,6 @@ class GroupeurProfile extends Model
         ];
     }
 
-
     /**
      * Relationship: The user who owns this groupeur profile.
      */

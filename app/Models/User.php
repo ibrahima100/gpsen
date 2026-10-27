@@ -159,4 +159,3 @@ class User extends Authenticatable
                 || (method_exists($this->groupeurProfile, 'isValidated') && $this->groupeurProfile->isValidated()));
     }
 }
-

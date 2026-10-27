@@ -187,7 +187,7 @@ test('TRD-6 : Transitions de statut interdites rejetees', function () {
     ]);
 
     // Interdit : de en_attente à livree directement
-    expect(fn() => $service->transition($req, 'livree', $user))->toThrow(\InvalidArgumentException::class);
+    expect(fn () => $service->transition($req, 'livree', $user))->toThrow(\InvalidArgumentException::class);
 });
 
 // 7. Un utilisateur ne peut pas modifier le trajet ou la demande d'un autre
@@ -335,7 +335,7 @@ test('TRD-9 : Un avis n est possible que sur une demande livree et une seule foi
 
     // Vérifier recalcul note groupeur
     $profile->refresh();
-    expect((float)$profile->average_rating)->toBe(5.0);
+    expect((float) $profile->average_rating)->toBe(5.0);
     expect($profile->ratings_count)->toBe(1);
 
     // 5. Rejet d'un deuxième avis par le même expéditeur sur la même livraison (unicité)

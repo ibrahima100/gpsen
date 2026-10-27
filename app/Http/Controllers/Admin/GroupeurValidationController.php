@@ -34,6 +34,7 @@ class GroupeurValidationController extends Controller
     public function show(GroupeurProfile $profile): View
     {
         $profile->load('user', 'validator');
+
         return view('admin.groupeurs.show', compact('profile'));
     }
 
@@ -58,7 +59,7 @@ class GroupeurValidationController extends Controller
 
         return Storage::disk('local')->response(
             $profile->id_document_path,
-            'piece_identite_' . $profile->user_id . '.' . pathinfo($profile->id_document_path, PATHINFO_EXTENSION),
+            'piece_identite_'.$profile->user_id.'.'.pathinfo($profile->id_document_path, PATHINFO_EXTENSION),
             ['Content-Disposition' => 'inline']
         );
     }
@@ -76,7 +77,7 @@ class GroupeurValidationController extends Controller
         ]);
 
         // Notification groupeur validé (Canal BDD Laravel)
-        $profile->user->notify(new \App\Notifications\GroupeurValidatedNotification());
+        $profile->user->notify(new \App\Notifications\GroupeurValidatedNotification);
 
         return redirect()->route('admin.groupeurs.show', $profile)
             ->with('success', "Le groupeur {$profile->user->name} a été validé avec succès.");

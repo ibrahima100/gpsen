@@ -70,24 +70,15 @@ class Trip extends Model
 
     /**
      * Scope: Filter trips that are open for bookings and departing today or in the future.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeOpen(Builder $query): Builder
     {
         return $query->where('status', 'ouvert')
-                     ->whereDate('departure_date', '>=', Carbon::today());
+            ->whereDate('departure_date', '>=', Carbon::today());
     }
 
     /**
      * Scope: Search trips by origin city, destination city, and departure date.
-     *
-     * @param Builder $query
-     * @param string|null $origin
-     * @param string|null $destination
-     * @param string|null $date
-     * @return Builder
      */
     public function scopeSearch(
         Builder $query,

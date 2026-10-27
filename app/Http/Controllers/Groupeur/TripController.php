@@ -15,6 +15,7 @@ use Illuminate\View\View;
 class TripController extends Controller
 {
     use AuthorizesRequests;
+
     public function __construct(
         protected TripCapacityService $capacityService
     ) {}

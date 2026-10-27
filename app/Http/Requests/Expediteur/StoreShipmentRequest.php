@@ -34,6 +34,7 @@ class StoreShipmentRequest extends FormRequest
 
             if (! $trip || $trip->status?->value !== 'ouvert') {
                 $validator->errors()->add('weight_kg', 'Ce trajet n\'accepte plus de nouvelles demandes d\'envoi.');
+
                 return;
             }
 

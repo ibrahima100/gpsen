@@ -16,7 +16,6 @@ class TripCapacityService
      * (statuses: acceptee, collectee, en_transit, livree) and subtracts their
      * total weight from the trip's initial capacity.
      *
-     * @param Trip $trip
      * @return float Remaining capacity in kg (never negative, min 0.0)
      */
     public function getRemainingCapacity(Trip $trip): float
@@ -36,8 +35,6 @@ class TripCapacityService
      * Determine whether the trip has enough remaining capacity to accommodate
      * the requested weight.
      *
-     * @param Trip $trip
-     * @param float $requestedKg
      * @return bool True if remaining capacity is greater than or equal to requested kg
      */
     public function canAccommodate(Trip $trip, float $requestedKg): bool
@@ -52,9 +49,6 @@ class TripCapacityService
      *
      * Note: Trips that are already in final or operational stages ('parti', 'termine', 'annule')
      * are preserved and not altered.
-     *
-     * @param Trip $trip
-     * @return void
      */
     public function updateTripStatus(Trip $trip): void
     {
@@ -66,7 +60,7 @@ class TripCapacityService
 
         if ($remaining <= 0) {
             // Only transition to 'complet' if not already complet and not past departure/cancelled
-            if ($currentStatus !== 'complet' && !in_array($currentStatus, ['parti', 'termine', 'annule'], true)) {
+            if ($currentStatus !== 'complet' && ! in_array($currentStatus, ['parti', 'termine', 'annule'], true)) {
                 $trip->status = 'complet';
                 $trip->save();
             }

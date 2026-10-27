@@ -15,9 +15,6 @@ class RatingService
      *
      * Queries all reviews targeted at this user, computes the arithmetic mean
      * and total count, and updates the user's groupeur profile if one exists.
-     *
-     * @param User $targetUser
-     * @return void
      */
     public function recalculate(User $targetUser): void
     {

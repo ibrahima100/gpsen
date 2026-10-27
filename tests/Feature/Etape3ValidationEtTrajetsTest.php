@@ -6,8 +6,6 @@ use App\Enums\TripStatus;
 use App\Models\Trip;
 use App\Models\User;
 use App\Services\TripCapacityService;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 test('admin peut lister les groupeurs et voir les dossiers', function () {
     $admin = User::factory()->create(['role' => Role::admin]);
@@ -150,7 +148,7 @@ test('service de capacite calcule correctement la disponibilite', function () {
         'status' => TripStatus::ouvert,
     ]);
 
-    $service = new TripCapacityService();
+    $service = new TripCapacityService;
     expect($service->getRemainingCapacity($trip))->toBe(50.0);
     expect($service->canAccommodate($trip, 30.0))->toBeTrue();
     expect($service->canAccommodate($trip, 55.0))->toBeFalse();

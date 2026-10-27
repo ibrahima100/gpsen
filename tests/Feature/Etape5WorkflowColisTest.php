@@ -127,10 +127,10 @@ test('transitions de statut interdites sont fermement rejetees', function () {
     ]);
 
     // Passer de 'en_attente' directement à 'livree' est strictement interdit
-    expect(fn() => $service->transition($req, 'livree', $groupeur))->toThrow(InvalidArgumentException::class);
+    expect(fn () => $service->transition($req, 'livree', $groupeur))->toThrow(InvalidArgumentException::class);
 
     // Passer de 'refusee' à 'acceptee' est interdit
     $req->status = RequestStatus::refusee;
     $req->save();
-    expect(fn() => $service->transition($req, 'acceptee', $groupeur))->toThrow(InvalidArgumentException::class);
+    expect(fn () => $service->transition($req, 'acceptee', $groupeur))->toThrow(InvalidArgumentException::class);
 });

@@ -8,7 +8,6 @@ use App\Mail\GroupeurRegisteredMail;
 use App\Mail\GroupeurRejectedMail;
 use App\Mail\GroupeurValidatedMail;
 use App\Mail\ReportReceivedMail;
-use App\Models\Report;
 use App\Models\Trip;
 use App\Models\User;
 use App\Support\Geo;
@@ -20,7 +19,6 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Recette utilisateur — remarques n°1 à 23 (tests écrits avant l'implémentation).
  */
-
 function admin7(): User
 {
     return User::factory()->create(['role' => Role::admin, 'status' => 'actif']);

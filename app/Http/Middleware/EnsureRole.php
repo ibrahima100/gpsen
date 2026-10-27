@@ -19,8 +19,6 @@ class EnsureRole
 
     /**
      * Create a new middleware instance.
-     *
-     * @param  Role|string  ...$roles
      */
     public function __construct(Role|string ...$roles)
     {
@@ -31,7 +29,6 @@ class EnsureRole
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @param  Role|string  ...$roles
      */
     public function handle(Request $request, Closure $next, Role|string ...$roles): Response
     {

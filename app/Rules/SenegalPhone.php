@@ -16,6 +16,7 @@ class SenegalPhone implements ValidationRule
     {
         if (! is_string($value)) {
             $fail('Le format du numéro de téléphone est invalide.');
+
             return;
         }
 
@@ -37,17 +38,17 @@ class SenegalPhone implements ValidationRule
 
         // Si le numéro commence par 7[05678] sans indicatif (9 chiffres locaux)
         if (preg_match('/^[7][05678][0-9]{7}$/', $clean)) {
-            return '+221' . $clean;
+            return '+221'.$clean;
         }
 
         // Si le numéro commence par 221 sans le +
         if (str_starts_with($clean, '221') && strlen($clean) === 12) {
-            return '+' . $clean;
+            return '+'.$clean;
         }
 
         // S'il n'a pas de +, s'assurer qu'il en a un s'il est international
         if (! str_starts_with($clean, '+') && strlen($clean) > 8) {
-            return '+' . $clean;
+            return '+'.$clean;
         }
 
         return $clean;

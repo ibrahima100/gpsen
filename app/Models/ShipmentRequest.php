@@ -139,21 +139,21 @@ class ShipmentRequest extends Model
             return false;
         }
 
-        return !$this->review()->where('author_id', $user->id)->exists();
+        return ! $this->review()->where('author_id', $user->id)->exists();
     }
 
     /**
      * Generate WhatsApp click-to-chat link if status is accepted or beyond.
      * Allowed statuses: acceptee, collectee, en_transit, livree.
      *
-     * @param string|null $recipient Target contact ('groupeur' | 'sender' | 'receiver')
+     * @param  string|null  $recipient  Target contact ('groupeur' | 'sender' | 'receiver')
      * @return string|null Full wa.me link with encoded message, or null if not eligible
      */
     public function whatsappLink(?string $recipient = 'groupeur'): ?string
     {
         $allowedStatuses = ['acceptee', 'collectee', 'en_transit', 'livree'];
 
-        if (!in_array($this->status, $allowedStatuses, true)) {
+        if (! in_array($this->status, $allowedStatuses, true)) {
             return null;
         }
 
@@ -167,7 +167,7 @@ class ShipmentRequest extends Model
             $phone = $this->trip?->groupeur?->phone;
         }
 
-        if (!$phone) {
+        if (! $phone) {
             return null;
         }
 

@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'phone' => '+221 77 ' . fake()->numerify('### ## ##'),
+            'phone' => '+221 77 '.fake()->numerify('### ## ##'),
             'role' => \App\Enums\Role::expediteur,
             'status' => 'actif',
             'locale' => 'fr',

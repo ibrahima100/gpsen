@@ -31,8 +31,6 @@ class ShipmentWorkflowService
 
     /**
      * Create a new ShipmentWorkflowService instance.
-     *
-     * @param TripCapacityService|null $tripCapacityService
      */
     public function __construct(
         protected ?TripCapacityService $tripCapacityService = null
@@ -42,10 +40,6 @@ class ShipmentWorkflowService
 
     /**
      * Check if a transition from current status to newStatus is allowed.
-     *
-     * @param ShipmentRequest $request
-     * @param string $newStatus
-     * @return bool
      */
     public function canTransition(ShipmentRequest $request, string $newStatus): bool
     {
@@ -61,10 +55,6 @@ class ShipmentWorkflowService
     /**
      * Perform the state transition on a shipment request inside a database transaction.
      *
-     * @param ShipmentRequest $request
-     * @param string $newStatus
-     * @param User $changedBy
-     * @param string|null $note
      * @return bool True on success
      *
      * @throws InvalidArgumentException When the requested transition is not permitted

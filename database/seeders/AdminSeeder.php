@@ -14,6 +14,7 @@ class AdminSeeder extends Seeder
 
         if (empty($password)) {
             $this->command?->error('ADMIN_PASSWORD est vide : définis-le dans le fichier .env.');
+
             return;
         }
 

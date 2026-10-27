@@ -44,14 +44,14 @@ class PublicTripController extends Controller
         if ($origin = $request->input('origin')) {
             $query->where(function ($q) use ($origin) {
                 $q->where('origin_city', 'like', "%{$origin}%")
-                  ->orWhere('origin_country', 'like', "%{$origin}%");
+                    ->orWhere('origin_country', 'like', "%{$origin}%");
             });
         }
 
         if ($destination = $request->input('destination')) {
             $query->where(function ($q) use ($destination) {
                 $q->where('destination_city', 'like', "%{$destination}%")
-                  ->orWhere('destination_country', 'like', "%{$destination}%");
+                    ->orWhere('destination_country', 'like', "%{$destination}%");
             });
         }
 

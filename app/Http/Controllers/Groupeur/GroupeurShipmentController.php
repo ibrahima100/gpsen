@@ -41,11 +41,11 @@ class GroupeurShipmentController extends Controller
         $requests = $query->latest()->paginate(12)->withQueryString();
 
         $counts = [
-            'en_attente' => ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'en_attente')->count(),
-            'acceptee' => ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'acceptee')->count(),
-            'collectee' => ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'collectee')->count(),
-            'en_transit' => ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'en_transit')->count(),
-            'livree' => ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'livree')->count(),
+            'en_attente' => ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'en_attente')->count(),
+            'acceptee' => ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'acceptee')->count(),
+            'collectee' => ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'collectee')->count(),
+            'en_transit' => ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'en_transit')->count(),
+            'livree' => ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', auth()->id()))->where('status', 'livree')->count(),
         ];
 
         return view('groupeur.demandes.index', compact('requests', 'counts', 'status'));

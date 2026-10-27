@@ -22,6 +22,7 @@ Route::get('/langue/{locale}', function (string $locale) {
     if ($user = auth()->user()) {
         $user->forceFill(['locale' => $locale])->save();
     }
+
     return back();
 })->name('locale.switch');
 
@@ -36,6 +37,7 @@ Route::get('/dashboard', function () {
             ? redirect()->route('groupeur.dashboard')
             : redirect()->route('groupeur.waiting');
     }
+
     return redirect()->route('expediteur.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
@@ -46,6 +48,7 @@ Route::middleware(['auth', 'role:groupeur'])->group(function () {
         if ($user->isGroupeurValidated()) {
             return redirect()->route('groupeur.dashboard');
         }
+
         return view('groupeur.waiting', [
             'profile' => $user->groupeurProfile,
         ]);
@@ -86,7 +89,8 @@ Route::middleware(['auth', 'role:groupeur', 'groupeur.validated'])->prefix('grou
     Route::get('/tableau-de-bord', function () {
         $user = auth()->user();
         $activeTripsCount = $user->trips()->whereIn('status', ['ouvert', 'complet', 'parti'])->count();
-        $pendingRequestsCount = \App\Models\ShipmentRequest::whereHas('trip', fn($q) => $q->where('groupeur_id', $user->id))->where('status', 'en_attente')->count();
+        $pendingRequestsCount = \App\Models\ShipmentRequest::whereHas('trip', fn ($q) => $q->where('groupeur_id', $user->id))->where('status', 'en_attente')->count();
+
         return view('groupeur.dashboard', [
             'user' => $user,
             'activeTripsCount' => $activeTripsCount,
@@ -114,6 +118,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         $totalUsers = \App\Models\User::count();
         $openTrips = \App\Models\Trip::where('status', 'ouvert')->count();
         $openReports = \App\Models\Report::where('status', 'ouvert')->count();
+
         return view('admin.dashboard', compact('pendingGroupeurs', 'totalUsers', 'openTrips', 'openReports'));
     })->name('dashboard');
 
