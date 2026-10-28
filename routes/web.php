@@ -128,6 +128,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/groupeurs/{profile}/piece-identite', [GroupeurValidationController::class, 'viewDocument'])->name('groupeurs.document');
     Route::post('/groupeurs/{profile}/valider', [GroupeurValidationController::class, 'validateProfile'])->name('groupeurs.validate');
     Route::post('/groupeurs/{profile}/refuser', [GroupeurValidationController::class, 'rejectProfile'])->name('groupeurs.reject');
+    Route::post('/groupeurs/{profile}/avertir', [GroupeurValidationController::class, 'warnProfile'])->name('groupeurs.warn');
 
     // Modération des signalements
     Route::get('/signalements', [\App\Http\Controllers\Admin\ReportManagementController::class, 'index'])->name('reports.index');
@@ -137,6 +138,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Supervision des utilisateurs
     Route::get('/utilisateurs', [\App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users.index');
     Route::post('/utilisateurs/{user}/toggle-status', [\App\Http\Controllers\Admin\UserManagementController::class, 'toggleStatus'])->name('users.toggleStatus');
+});
+
+// Données de localisation pour autocomplétion (pays et villes)
+Route::prefix('api/locations')->name('api.locations.')->group(function () {
+    Route::get('/countries', [\App\Http\Controllers\Api\LocationController::class, 'countries'])->name('countries');
+    Route::get('/cities', [\App\Http\Controllers\Api\LocationController::class, 'cities'])->name('cities');
 });
 
 // Notifications

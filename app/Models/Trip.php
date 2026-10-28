@@ -21,8 +21,12 @@ class Trip extends Model
      */
     protected $fillable = [
         'groupeur_id',
+        'origin_country_id',
+        'origin_city_id',
         'origin_country',
         'origin_city',
+        'destination_country_id',
+        'destination_city_id',
         'destination_country',
         'destination_city',
         'departure_date',

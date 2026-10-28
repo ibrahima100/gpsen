@@ -34,8 +34,12 @@ class GroupeurValidationController extends Controller
     public function show(GroupeurProfile $profile): View
     {
         $profile->load('user', 'validator');
+        $warnings = \App\Models\Warning::with('admin')
+            ->where('groupeur_id', $profile->user_id)
+            ->latest('sent_at')
+            ->get();
 
-        return view('admin.groupeurs.show', compact('profile'));
+        return view('admin.groupeurs.show', compact('profile', 'warnings'));
     }
 
     /**
@@ -107,5 +111,49 @@ class GroupeurValidationController extends Controller
 
         return redirect()->route('admin.groupeurs.show', $profile)
             ->with('warning', "Le dossier de {$profile->user->name} a été refusé avec motif notifié.");
+    }
+
+    /**
+     * Envoyer un avertissement officiel au groupeur avant fermeture potentielle de compte.
+     */
+    public function warnProfile(Request $request, GroupeurProfile $profile): RedirectResponse
+    {
+        $validated = $request->validate([
+            'reason_preset' => ['required', 'string'],
+            'custom_reason' => ['nullable', 'string', 'max:255'],
+            'details' => ['nullable', 'string', 'max:1000'],
+            'delay_days' => ['required', 'integer', 'min:1', 'max:30'],
+        ], [
+            'reason_preset.required' => 'Le motif de l\'avertissement est obligatoire.',
+            'delay_days.required' => 'Le délai de régularisation est obligatoire.',
+            'delay_days.min' => 'Le délai minimum est de 1 jour.',
+            'delay_days.max' => 'Le délai maximum est de 30 jours.',
+        ]);
+
+        $finalReason = ($validated['reason_preset'] === 'autre' && ! empty($validated['custom_reason']))
+            ? $validated['custom_reason']
+            : $validated['reason_preset'];
+
+        $warning = \App\Models\Warning::create([
+            'groupeur_id' => $profile->user_id,
+            'admin_id' => auth()->id(),
+            'reason' => $finalReason,
+            'details' => $validated['details'] ?? null,
+            'delay_days' => (int) $validated['delay_days'],
+            'sent_at' => now(),
+        ]);
+
+        // Envoi du courriel avec le motif, le délai et la marche à suivre
+        if ($profile->user && $profile->user->email) {
+            \Illuminate\Support\Facades\Mail::to($profile->user->email)->send(
+                new \App\Mail\WarningBeforeAccountClosureMail($warning)
+            );
+        }
+
+        // Notification dans la plateforme
+        $profile->user->notify(new \App\Notifications\WarningReceivedNotification($warning));
+
+        return redirect()->route('admin.groupeurs.show', $profile)
+            ->with('success', "Avertissement officiel envoyé avec succès par courriel à {$profile->user->name}. Délai accordé : {$warning->delay_days} jours.");
     }
 }

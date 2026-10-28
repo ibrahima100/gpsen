@@ -34,7 +34,7 @@ class ReportController extends Controller
      */
     public function store(StoreReportRequest $request): RedirectResponse
     {
-        Report::create([
+        $report = Report::create([
             'reporter_id' => auth()->id(),
             'target_user_id' => $request->validated('target_user_id'),
             'trip_id' => $request->validated('trip_id'),
@@ -44,6 +44,13 @@ class ReportController extends Controller
             'status' => 'ouvert',
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Votre signalement a été enregistré et transmis à notre équipe de modération.');
+        // Envoi de l'accusé de réception confidentiel uniquement à la personne qui signale
+        if ($report->reporter && $report->reporter->email) {
+            \Illuminate\Support\Facades\Mail::to($report->reporter->email)->send(
+                new \App\Mail\ReportReceivedMail($report)
+            );
+        }
+
+        return redirect()->route('dashboard')->with('success', 'Votre signalement a été enregistré et transmis à notre équipe de modération. Un accusé de réception vous a été envoyé par email.');
     }
 }

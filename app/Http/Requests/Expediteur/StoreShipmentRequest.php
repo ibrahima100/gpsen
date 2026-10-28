@@ -22,8 +22,20 @@ class StoreShipmentRequest extends FormRequest
             'declared_value' => ['nullable', 'integer', 'min:0', 'max:10000000'],
             'receiver_name' => ['required', 'string', 'max:120'],
             'receiver_phone' => ['required', 'string', 'max:20'],
-            'receiver_city' => ['required', 'string', 'max:80'],
+            'receiver_country_id' => ['nullable', 'exists:countries,id'],
+            'receiver_city_id' => ['nullable', 'exists:cities,id'],
+            'receiver_city' => ['nullable', 'string', 'max:80'],
         ];
+    }
+
+    protected function passedValidation(): void
+    {
+        if ($this->receiver_city_id) {
+            $city = \App\Models\City::find($this->receiver_city_id);
+            if ($city) {
+                $this->merge(['receiver_city' => $city->name]);
+            }
+        }
     }
 
     public function withValidator($validator): void

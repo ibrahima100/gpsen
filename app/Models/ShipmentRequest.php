@@ -35,6 +35,7 @@ class ShipmentRequest extends Model
         'receiver_name',
         'receiver_phone',
         'receiver_city',
+        'receiver_city_id',
         'status',
         'delivery_code',
         'decision_note',
