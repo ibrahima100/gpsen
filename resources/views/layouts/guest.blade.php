@@ -25,8 +25,7 @@
             <div class="hidden lg:block absolute -bottom-44 -right-24 w-[520px] h-[280px] bg-gp-ink -rotate-[14deg]"></div>
 
             <div class="relative z-10 max-w-6xl mx-auto px-5 py-6 min-h-screen flex flex-col">
-                <div class="flex items-center justify-between">
-                    <x-language-switcher />
+                <div class="flex items-center justify-end">
                     <a href="/" class="text-sm font-semibold text-gp-warm hover:text-gp-orange transition">&larr; Accueil</a>
                 </div>
 

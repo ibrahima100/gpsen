@@ -53,7 +53,6 @@
                 </button>
                 <h1 class="font-bold text-lg">{{ $header ?? 'Administration' }}</h1>
                 <div class="flex items-center gap-3">
-                    <x-language-switcher />
                     <x-notification-bell />
                     
                     <!-- Menu Paramètres / Profil Admin -->

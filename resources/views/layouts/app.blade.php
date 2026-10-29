@@ -39,7 +39,6 @@
             </nav>
 
             <div class="hidden md:flex items-center gap-3">
-                <x-language-switcher />
                 <x-notification-bell />
                 <span class="text-sm text-gp-warm">{{ $user?->name }}</span>
                 <form method="POST" action="{{ route('logout') }}">
@@ -65,7 +64,6 @@
                     </span>
                 @endif
             </a>
-            <x-language-switcher />
             <form method="POST" action="{{ route('logout') }}">@csrf
                 <x-button type="submit" variant="secondary">{{ __('app.logout') }}</x-button>
             </form>

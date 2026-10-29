@@ -11,7 +11,6 @@
         </nav>
 
         <div class="hidden md:flex items-center gap-3">
-            <x-language-switcher />
             @auth
                 <x-notification-bell />
                 <x-button href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</x-button>
@@ -31,7 +30,6 @@
         <a href="{{ route('home') }}#comment-ca-marche" class="block gp-link">{{ __('app.how_it_works') }}</a>
         <a href="{{ route('trajets.index') }}" class="block gp-link">{{ __('app.trips') }}</a>
         <div class="flex items-center gap-3 pt-2">
-            <x-language-switcher />
             @auth
                 <x-button href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</x-button>
             @else
