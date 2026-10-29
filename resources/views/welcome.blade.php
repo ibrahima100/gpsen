@@ -119,41 +119,81 @@
         </div>
     </section>
 
-    <!-- Comment ça marche en 3 étapes asymétriques (UI/UX §5.1) -->
-    <section id="comment-ca-marche" class="bg-gp-sand/40 border-y border-gp-border py-16 scroll-mt-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center max-w-xl mx-auto mb-12">
-                <span class="text-xs font-bold uppercase tracking-wider text-gp-orange-dark">Simplicité & Sécurité</span>
-                <h2 class="text-3xl font-extrabold text-gp-ink mt-1">Comment fonctionne GPsen ?</h2>
-                <p class="text-xs text-gp-warm mt-2 leading-relaxed">Une chaîne logistique collaborative humaine et transparente en trois temps.</p>
+    <!-- Comment ça marche en 3 étapes néo-modernes 2026 avec fond sombre et micro-animations -->
+    <section id="comment-ca-marche" class="relative bg-gp-ink text-gp-sand border-y border-gp-border py-20 scroll-mt-20 overflow-hidden">
+        {{-- Halos néo-modernes --}}
+        <div class="absolute top-0 right-1/4 w-80 h-80 bg-gp-orange/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-gp-orange/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center max-w-xl mx-auto mb-16 space-y-3">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase bg-white/10 text-gp-orange border border-white/10 shadow-sm backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-gp-orange animate-ping"></span>
+                    Simplicité & Sécurité
+                </span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Comment fonctionne GPsen ?</h2>
+                <p class="text-xs md:text-sm text-gp-border leading-relaxed">Une chaîne logistique collaborative humaine et transparente en trois temps.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Étape 1 -->
-                <div class="bg-white p-6 rounded-gp border border-gp-border shadow-sm">
-                    <span class="text-2xl font-black text-gp-orange-dark">01</span>
-                    <h3 class="text-base font-bold text-gp-ink mt-3">Rechercher ou publier</h3>
-                    <p class="text-xs text-gp-warm mt-2 leading-relaxed">
-                        Les voyageurs certifiés publient leurs dates et kilos disponibles. Les expéditeurs sélectionnent le départ qui correspond à leur besoin.
-                    </p>
+                <div class="group relative bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-gp-orange/50 rounded-2xl p-7 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(242,107,29,0.25)] flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <span class="text-3xl font-black text-gp-orange/80 group-hover:text-gp-orange group-hover:scale-110 transition-transform duration-300 inline-block">01</span>
+                            <span class="p-2.5 rounded-xl bg-white/5 text-gp-orange border border-white/10 group-hover:bg-gp-orange group-hover:text-white transition-colors duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mt-5 group-hover:text-gp-orange transition-colors">Rechercher ou publier</h3>
+                        <p class="text-xs text-gp-border/90 mt-2 leading-relaxed">
+                            Les voyageurs vérifiés publient leurs dates et kilos disponibles. Les expéditeurs sélectionnent le départ qui correspond à leur besoin.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-gp-border font-medium">
+                        <span>Trajets certifiés</span>
+                        <span class="text-gp-orange font-bold">&rarr;</span>
+                    </div>
                 </div>
 
                 <!-- Étape 2 -->
-                <div class="bg-white p-6 rounded-gp border border-gp-border shadow-sm md:translate-y-4">
-                    <span class="text-2xl font-black text-gp-orange-dark">02</span>
-                    <h3 class="text-base font-bold text-gp-ink mt-3">Validation & WhatsApp direct</h3>
-                    <p class="text-xs text-gp-warm mt-2 leading-relaxed">
-                        L'expéditeur détaille son colis. Dès que le groupeur accepte, le contact WhatsApp direct est débloqué pour organiser la remise.
-                    </p>
+                <div class="group relative bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-gp-orange/50 rounded-2xl p-7 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(242,107,29,0.25)] flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <span class="text-3xl font-black text-gp-orange/80 group-hover:text-gp-orange group-hover:scale-110 transition-transform duration-300 inline-block">02</span>
+                            <span class="p-2.5 rounded-xl bg-white/5 text-gp-orange border border-white/10 group-hover:bg-gp-orange group-hover:text-white transition-colors duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mt-5 group-hover:text-gp-orange transition-colors">Validation & WhatsApp direct</h3>
+                        <p class="text-xs text-gp-border/90 mt-2 leading-relaxed">
+                            L'expéditeur détaille son colis. Dès que le groupeur accepte, le contact WhatsApp direct est débloqué pour organiser la remise.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-gp-border font-medium">
+                        <span>Échanges directs sécurisés</span>
+                        <span class="text-gp-orange font-bold">&rarr;</span>
+                    </div>
                 </div>
 
                 <!-- Étape 3 -->
-                <div class="bg-white p-6 rounded-gp border border-gp-border shadow-sm md:translate-y-8">
-                    <span class="text-2xl font-black text-gp-orange-dark">03</span>
-                    <h3 class="text-base font-bold text-gp-ink mt-3">Suivi et remise en main propre</h3>
-                    <p class="text-xs text-gp-warm mt-2 leading-relaxed">
-                        Le colis est suivi à chaque étape (collecté, en transit, livré). À l'arrivée, l'expéditeur et le destinataire valident la livraison.
-                    </p>
+                <div class="group relative bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-gp-orange/50 rounded-2xl p-7 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(242,107,29,0.25)] flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <span class="text-3xl font-black text-gp-orange/80 group-hover:text-gp-orange group-hover:scale-110 transition-transform duration-300 inline-block">03</span>
+                            <span class="p-2.5 rounded-xl bg-white/5 text-gp-orange border border-white/10 group-hover:bg-gp-orange group-hover:text-white transition-colors duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mt-5 group-hover:text-gp-orange transition-colors">Code OTP & Remise physique</h3>
+                        <p class="text-xs text-gp-border/90 mt-2 leading-relaxed">
+                            Le colis est suivi à chaque étape. À l'arrivée, le code de remise confidentiel à 4 chiffres sécurise définitivement la livraison physique.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-gp-border font-medium">
+                        <span>Code de livraison OTP</span>
+                        <span class="text-gp-orange font-bold">&rarr;</span>
+                    </div>
                 </div>
             </div>
         </div>
