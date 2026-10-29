@@ -26,22 +26,9 @@ class PublicTripController extends Controller
             ->take(6)
             ->get();
 
-        // Récupération des villes de départ et de destination stratégiques de la diaspora
-        $popularOrigins = \App\Models\City::with('country')
-            ->whereIn('name', ['Dakar', 'Thiès', 'Saint-Louis', 'Mbour', 'Ziguinchor', 'Touba', 'Paris', 'Lyon', 'Marseille'])
-            ->orderByRaw("CASE WHEN name = 'Dakar' THEN 0 WHEN name = 'Paris' THEN 1 ELSE 2 END")
-            ->get();
-
-        $popularDestinations = \App\Models\City::with('country')
-            ->whereIn('name', ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Milan', 'Rome', 'Madrid', 'Barcelone', 'Bruxelles', 'Montréal', 'New York', 'Casablanca', 'Abidjan', 'Dakar'])
-            ->orderByRaw("CASE WHEN name = 'Paris' THEN 0 WHEN name = 'Milan' THEN 1 WHEN name = 'New York' THEN 2 WHEN name = 'Casablanca' THEN 3 ELSE 4 END")
-            ->get();
-
         return view('welcome', [
             'recentTrips' => $recentTrips,
             'capacityService' => $this->capacityService,
-            'popularOrigins' => $popularOrigins,
-            'popularDestinations' => $popularDestinations,
         ]);
     }
 

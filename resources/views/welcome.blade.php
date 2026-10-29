@@ -23,25 +23,15 @@
             </div>
 
             <!-- Formulaire de recherche rapide (§5.1) -->
-            <div class="mt-8 bg-white/95 backdrop-blur-md p-5 md:p-6 rounded-gp border border-gp-border shadow-lg max-w-4xl" x-data="{ originInput: '{{ request('origin') }}', destInput: '{{ request('destination') }}' }">
+            <div class="mt-8 bg-white/95 backdrop-blur-md p-5 md:p-6 rounded-gp border border-gp-border shadow-lg max-w-4xl">
                 <form method="GET" action="{{ route('trajets.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
                     <div>
                         <label for="origin" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Ville de départ</label>
-                        <input type="text" id="origin" name="origin" x-model="originInput" list="popular-origins" placeholder="Ex. Dakar, Paris" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
-                        <datalist id="popular-origins">
-                            @foreach($popularOrigins as $c)
-                                <option value="{{ $c->name }}">{{ $c->name }} ({{ $c->country->name }})</option>
-                            @endforeach
-                        </datalist>
+                        <input type="text" id="origin" name="origin" value="{{ request('origin') }}" placeholder="Ex. Dakar, Paris" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
                     </div>
                     <div>
                         <label for="destination" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Destination</label>
-                        <input type="text" id="destination" name="destination" x-model="destInput" list="popular-destinations" placeholder="Ex. Paris, Milan" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
-                        <datalist id="popular-destinations">
-                            @foreach($popularDestinations as $c)
-                                <option value="{{ $c->name }}">{{ $c->name }} ({{ $c->country->name }})</option>
-                            @endforeach
-                        </datalist>
+                        <input type="text" id="destination" name="destination" value="{{ request('destination') }}" placeholder="Ex. Paris, Milan" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
                     </div>
                     <div>
                         <label for="date" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Date à partir du</label>
@@ -54,72 +44,6 @@
                         </button>
                     </div>
                 </form>
-
-                <!-- Suggestions rapides en un clic -->
-                <div class="mt-4 pt-3 border-t border-gp-border/60 flex flex-wrap items-center gap-2 text-xs">
-                    <span class="font-bold text-gp-warm text-[11px] uppercase tracking-wider">Destinations fréquentes :</span>
-                    @foreach(['Paris', 'Milan', 'New York', 'Madrid', 'Casablanca', 'Montréal', 'Bruxelles'] as $cityPill)
-                        <button type="button" 
-                                @click="destInput = '{{ $cityPill }}'" 
-                                class="px-2.5 py-1 rounded-full bg-gp-sand hover:bg-gp-orange hover:text-white text-gp-ink font-semibold transition text-[11px] border border-gp-border">
-                            {{ $cityPill }}
-                        </button>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bandeau des lignes et hubs logistiques populaires de la diaspora -->
-    <section class="bg-white border-b border-gp-border py-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
-                <div>
-                    <h3 class="text-sm font-extrabold uppercase tracking-wider text-gp-ink flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-gp-orange inline-block"></span>
-                        Couloirs de fret et villes les plus desservies
-                    </h3>
-                    <p class="text-xs text-gp-warm mt-0.5">Sélectionnez directement un axe pour afficher les départs disponibles.</p>
-                </div>
-                <div class="flex items-center gap-4 text-xs font-bold text-gp-warm">
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Sénégal &harr; Europe</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Sénégal &harr; Amériques</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Sous-région & Maghreb</span>
-                </div>
-            </div>
-
-            <!-- Grille des hubs clés -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                @php
-                    $majorHubs = [
-                        ['city' => 'Paris', 'country' => 'France', 'flag' => '🇫🇷', 'tag' => 'Quotidien'],
-                        ['city' => 'Milan', 'country' => 'Italie', 'flag' => '🇮🇹', 'tag' => 'Très actif'],
-                        ['city' => 'Madrid', 'country' => 'Espagne', 'flag' => '🇪🇸', 'tag' => 'Régulier'],
-                        ['city' => 'New York', 'country' => 'États-Unis', 'flag' => '🇺🇸', 'tag' => 'Hebdomadaire'],
-                        ['city' => 'Casablanca', 'country' => 'Maroc', 'flag' => '🇲🇦', 'tag' => 'Fréquent'],
-                        ['city' => 'Montréal', 'country' => 'Canada', 'flag' => '🇨🇦', 'tag' => 'Actif'],
-                    ];
-                @endphp
-                @foreach($majorHubs as $hub)
-                    <a href="{{ route('trajets.index', ['destination' => $hub['city']]) }}" 
-                       class="group p-3 rounded-gp bg-gp-sand/40 hover:bg-white border border-gp-border hover:border-gp-orange hover:shadow-md transition flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-base">
-                                <span>{{ $hub['flag'] }}</span>
-                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white text-gp-orange border border-gp-border group-hover:bg-gp-orange group-hover:text-white transition">
-                                    {{ $hub['tag'] }}
-                                </span>
-                            </div>
-                            <h4 class="font-bold text-sm text-gp-ink mt-2 group-hover:text-gp-orange transition">
-                                {{ $hub['city'] }}
-                            </h4>
-                            <p class="text-[11px] text-gp-warm">{{ $hub['country'] }}</p>
-                        </div>
-                        <span class="text-[10px] font-bold text-gp-orange mt-2 inline-flex items-center gap-1">
-                            Voir trajets &rarr;
-                        </span>
-                    </a>
-                @endforeach
             </div>
         </div>
     </section>
