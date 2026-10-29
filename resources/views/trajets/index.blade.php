@@ -5,16 +5,47 @@
             <p class="text-xs text-gp-warm mt-1">Trouvez un voyageur vérifié pour acheminer votre colis vers votre destination.</p>
         </div>
 
-        <!-- Filtres selon UI/UX §5.4 -->
+        <!-- Filtres selon UI/UX §5.4 avec listes déroulantes de pays et villes -->
         <div class="bg-white p-5 rounded-gp border border-gp-border shadow-sm">
+            @php
+                $availableCountries = \App\Models\Country::with(['cities' => fn($q) => $q->orderBy('name')])->orderBy('name')->get();
+            @endphp
             <form method="GET" action="{{ route('trajets.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
                 <div>
                     <label for="origin" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Ville ou pays de départ</label>
-                    <input type="text" id="origin" name="origin" value="{{ $filters['origin'] ?? '' }}" placeholder="Ex. Dakar" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
+                    <select id="origin" name="origin" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange">
+                        <option value="">Tous les départs</option>
+                        @foreach($availableCountries as $country)
+                            <optgroup label="📍 {{ $country->name }}">
+                                <option value="{{ $country->name }}" {{ ($filters['origin'] ?? '') === $country->name ? 'selected' : '' }}>
+                                    Tout le pays ({{ $country->name }})
+                                </option>
+                                @foreach($country->cities as $city)
+                                    <option value="{{ $city->name }}" {{ ($filters['origin'] ?? '') === $city->name ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label for="destination" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Destination</label>
-                    <input type="text" id="destination" name="destination" value="{{ $filters['destination'] ?? '' }}" placeholder="Ex. Paris" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
+                    <select id="destination" name="destination" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange">
+                        <option value="">Toutes les destinations</option>
+                        @foreach($availableCountries as $country)
+                            <optgroup label="🎯 {{ $country->name }}">
+                                <option value="{{ $country->name }}" {{ ($filters['destination'] ?? '') === $country->name ? 'selected' : '' }}>
+                                    Tout le pays ({{ $country->name }})
+                                </option>
+                                @foreach($country->cities as $city)
+                                    <option value="{{ $city->name }}" {{ ($filters['destination'] ?? '') === $city->name ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label for="date" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Départ à partir du</label>
@@ -25,7 +56,7 @@
                         Filtrer
                     </button>
                     @if(!empty(array_filter($filters)))
-                        <a href="{{ route('trajets.index') }}" class="px-3 py-2.5 rounded-gp border border-gp-border text-xs font-bold text-gp-warm hover:bg-gp-sand transition">
+                        <a href="{{ route('trajets.index') }}" class="px-3 py-2.5 rounded-gp border border-gp-border text-xs font-bold text-gp-warm hover:bg-gp-sand transition" title="Réinitialiser les filtres">
                             ✕
                         </a>
                     @endif

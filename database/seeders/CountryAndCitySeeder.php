@@ -27,8 +27,8 @@ class CountryAndCitySeeder extends Seeder
             'FR' => [
                 'name' => 'France',
                 'cities' => [
-                    'Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Montpellier',
-                    'Strasbourg', 'Bordeaux', 'Lille', 'Rennes', 'Reims', 'Saint-Étienne', 'Toulon',
+                    'Paris', 'Marseille', 'Lyon', 'Lille', 'Bordeaux', 'Toulouse', 'Nice', 'Nantes', 'Montpellier',
+                    'Strasbourg', 'Rennes', 'Reims', 'Saint-Étienne', 'Toulon',
                     'Le Havre', 'Grenoble', 'Dijon', 'Angers', 'Nîmes', 'Villeurbanne', 'Le Mans',
                     'Aix-en-Provence', 'Clermont-Ferrand', 'Brest', 'Tours', 'Amiens', 'Limoges',
                     'Perpignan', 'Boulogne-Billancourt', 'Metz', 'Besançon', 'Orléans', 'Saint-Denis', 'Argenteuil',
@@ -37,9 +37,9 @@ class CountryAndCitySeeder extends Seeder
             'IT' => [
                 'name' => 'Italie',
                 'cities' => [
-                    'Rome', 'Milan', 'Naples', 'Turin', 'Palerme', 'Gênes', 'Bologne', 'Florence',
-                    'Bari', 'Catane', 'Venise', 'Vérone', 'Messine', 'Padoue', 'Trieste', 'Brescia',
-                    'Parme', 'Bergame',
+                    'Milan', 'Brescia', 'Bergame', 'Turin', 'Rome', 'Naples', 'Palerme', 'Gênes', 'Bologne', 'Florence',
+                    'Bari', 'Catane', 'Venise', 'Vérone', 'Messine', 'Padoue', 'Trieste',
+                    'Parme',
                 ],
             ],
             'ES' => [
@@ -49,6 +49,22 @@ class CountryAndCitySeeder extends Seeder
                     'Palma', 'Las Palmas', 'Bilbao', 'Alicante', 'Cordoue', 'Valladolid',
                 ],
             ],
+            'US' => [
+                'name' => 'États-Unis',
+                'cities' => [
+                    'New York', 'Washington DC', 'Atlanta', 'Boston', 'Chicago', 'Houston', 'Phoenix', 'Philadelphie',
+                    'San Antonio', 'San Diego', 'Dallas', 'Austin', 'Jacksonville', 'Fort Worth',
+                    'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver',
+                    'Miami',
+                ],
+            ],
+            'CA' => [
+                'name' => 'Canada',
+                'cities' => [
+                    'Montréal', 'Québec', 'Ottawa', 'Toronto', 'Vancouver', 'Calgary', 'Edmonton',
+                    'Winnipeg', 'Hamilton', 'Halifax',
+                ],
+            ],
             'BE' => [
                 'name' => 'Belgique',
                 'cities' => [
@@ -56,27 +72,10 @@ class CountryAndCitySeeder extends Seeder
                     'Louvain', 'Mons', 'Alost',
                 ],
             ],
-            'US' => [
-                'name' => 'États-Unis',
+            'GB' => [
+                'name' => 'Royaume-Uni',
                 'cities' => [
-                    'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphie',
-                    'San Antonio', 'San Diego', 'Dallas', 'Austin', 'Jacksonville', 'Fort Worth',
-                    'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver',
-                    'Washington', 'Boston', 'Atlanta', 'Miami',
-                ],
-            ],
-            'CA' => [
-                'name' => 'Canada',
-                'cities' => [
-                    'Montréal', 'Toronto', 'Vancouver', 'Calgary', 'Edmonton', 'Ottawa',
-                    'Québec', 'Winnipeg', 'Hamilton', 'Halifax',
-                ],
-            ],
-            'CI' => [
-                'name' => 'Côte d\'Ivoire',
-                'cities' => [
-                    'Abidjan', 'Bouaké', 'Yamoussoukro', 'San-Pédro', 'Korhogo', 'Daloa',
-                    'Man', 'Gagnoa', 'Soubré',
+                    'Londres', 'Manchester', 'Birmingham', 'Liverpool',
                 ],
             ],
             'MA' => [
@@ -84,6 +83,31 @@ class CountryAndCitySeeder extends Seeder
                 'cities' => [
                     'Casablanca', 'Rabat', 'Fès', 'Tanger', 'Marrakech', 'Salé', 'Meknès',
                     'Agadir', 'Oujda', 'Kénitra',
+                ],
+            ],
+            'CN' => [
+                'name' => 'Chine',
+                'cities' => [
+                    'Guangzhou', 'Yiwu', 'Pékin', 'Shanghai',
+                ],
+            ],
+            'TR' => [
+                'name' => 'Turquie',
+                'cities' => [
+                    'Istanbul', 'Ankara', 'Izmir',
+                ],
+            ],
+            'AE' => [
+                'name' => 'Émirats arabes unis',
+                'cities' => [
+                    'Dubaï', 'Abou Dabi', 'Charjah',
+                ],
+            ],
+            'CI' => [
+                'name' => 'Côte d\'Ivoire',
+                'cities' => [
+                    'Abidjan', 'Bouaké', 'Yamoussoukro', 'San-Pédro', 'Korhogo', 'Daloa',
+                    'Man', 'Gagnoa', 'Soubré',
                 ],
             ],
         ];

@@ -22,23 +22,58 @@
                 </p>
             </div>
 
-            <!-- Formulaire de recherche rapide (§5.1) -->
+            <!-- Formulaire de recherche rapide (§5.1) avec sélection des villes et pays GPsen -->
             <div class="mt-8 bg-white/95 backdrop-blur-md p-5 md:p-6 rounded-gp border border-gp-border shadow-lg max-w-4xl">
+                @php
+                    $availableCountries = \App\Models\Country::with(['cities' => fn($q) => $q->orderBy('name')])->orderBy('name')->get();
+                @endphp
                 <form method="GET" action="{{ route('trajets.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
                     <div>
-                        <label for="origin" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Ville de départ</label>
-                        <input type="text" id="origin" name="origin" value="{{ request('origin') }}" placeholder="Ex. Dakar, Paris" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
+                        <label for="origin" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">
+                            Ville ou pays de départ
+                        </label>
+                        <select id="origin" name="origin" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange">
+                            <option value="">Tous les départs</option>
+                            @foreach($availableCountries as $country)
+                                <optgroup label="📍 {{ $country->name }}">
+                                    <option value="{{ $country->name }}" {{ request('origin') === $country->name ? 'selected' : '' }}>
+                                        Tout le pays ({{ $country->name }})
+                                    </option>
+                                    @foreach($country->cities as $city)
+                                        <option value="{{ $city->name }}" {{ request('origin') === $city->name ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
-                        <label for="destination" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Destination</label>
-                        <input type="text" id="destination" name="destination" value="{{ request('destination') }}" placeholder="Ex. Paris, Milan" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
+                        <label for="destination" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">
+                            Destination
+                        </label>
+                        <select id="destination" name="destination" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange">
+                            <option value="">Toutes les destinations</option>
+                            @foreach($availableCountries as $country)
+                                <optgroup label="🎯 {{ $country->name }}">
+                                    <option value="{{ $country->name }}" {{ request('destination') === $country->name ? 'selected' : '' }}>
+                                        Tout le pays ({{ $country->name }})
+                                    </option>
+                                    @foreach($country->cities as $city)
+                                        <option value="{{ $city->name }}" {{ request('destination') === $city->name ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="date" class="block text-xs font-bold uppercase tracking-wider text-gp-ink mb-1">Date à partir du</label>
-                        <input type="date" id="date" name="date" value="{{ request('date') }}" class="w-full text-sm rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
+                        <input type="date" id="date" name="date" value="{{ request('date') }}" class="w-full text-xs rounded-gp border-gp-border focus:ring-gp-orange focus:border-gp-orange" />
                     </div>
                     <div>
-                        <button type="submit" class="w-full py-3 rounded-gp bg-gp-orange hover:bg-gp-orange-dark text-white font-bold text-sm transition uppercase tracking-wider shadow-sm flex items-center justify-center gap-2">
+                        <button type="submit" class="w-full py-2.5 rounded-gp bg-gp-orange hover:bg-gp-orange-dark text-white font-bold text-xs transition uppercase tracking-wider shadow-sm flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             Trouver un trajet
                         </button>
