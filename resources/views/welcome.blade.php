@@ -12,7 +12,7 @@
         <div class="max-w-6xl mx-auto px-4 relative z-10">
             <div class="max-w-2xl bg-white/60 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-white/60 shadow-sm">
                 <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white text-gp-orange-dark border border-gp-border mb-4 shadow-2xs">
-                    Plateforme certifiée de groupage participatif
+                    Groupage participatif de colis
                 </span>
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gp-ink leading-[1.1] tracking-tight">
                     Envoyez vos colis moins cher avec des <span class="text-gp-orange-dark">voyageurs vérifiés.</span>
