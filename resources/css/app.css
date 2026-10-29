@@ -14,6 +14,16 @@
     .gp-link { @apply text-gp-warm hover:text-gp-orange font-medium transition-colors; }
 }
 
+/* Faisceau lumineux néo-2026 animant le contour des bordures transparentes */
+@keyframes spin-beam {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin-beam {
+    animation: spin-beam 6s linear infinite;
+}
+
 body { @apply bg-gp-sand-light text-gp-ink; }
 
 [x-cloak] { display: none !important; }
