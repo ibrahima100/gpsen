@@ -1,29 +1,29 @@
 <x-public-layout :title="__('Accueil — Groupage participatif de colis')">
-    <!-- Hero section avec photo de fond visible (images/fond.jpg identique à login/register) et masque contrasté -->
-    <section class="relative bg-gp-sand overflow-hidden py-16 md:py-24 border-b border-gp-border">
-        {{-- Photo de fond (fond.jpg) avec cadrage soigné et superposition de dégradé protecteur pour la lisibilité --}}
-        <div class="absolute inset-0 bg-cover bg-center lg:bg-[position:80%_center]" style="background-image:url('{{ asset('images/fond.jpg') }}')"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-gp-sand/98 via-gp-sand/90 to-gp-sand/50"></div>
+    <!-- Hero section responsive Mobile First & Desktop -->
+    <section class="relative bg-gp-sand overflow-hidden py-10 sm:py-16 md:py-24 border-b border-gp-border">
+        {{-- Photo de fond adaptée : bien cadrée à droite sur grand écran et masquée/estompée sur mobile pour éliminer tout flou --}}
+        <div class="hidden md:block absolute inset-0 bg-cover bg-[position:85%_center]" style="background-image:url('{{ asset('images/fond.jpg') }}')"></div>
+        <div class="hidden md:block absolute inset-0 bg-gradient-to-r from-gp-sand via-gp-sand/90 to-transparent"></div>
 
-        {{-- Formes diagonales stylisées signature GPsen --}}
+        {{-- Formes décoratives GPsen --}}
         <div class="hidden lg:block absolute -bottom-24 -right-20 w-[550px] h-[260px] bg-gp-orange/20 -rotate-[14deg] pointer-events-none"></div>
         <div class="hidden lg:block absolute -bottom-40 -right-24 w-[450px] h-[240px] bg-gp-ink/10 -rotate-[14deg] pointer-events-none"></div>
 
         <div class="max-w-6xl mx-auto px-4 relative z-10">
-            <div class="max-w-2xl bg-white/60 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-white/60 shadow-sm">
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white text-gp-orange-dark border border-gp-border mb-4 shadow-2xs">
+            <div class="max-w-2xl bg-white/90 md:bg-white/80 md:backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-gp-border md:border-white/60 shadow-sm">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white text-gp-orange-dark border border-gp-border mb-3 sm:mb-4 shadow-2xs">
                     Groupage participatif de colis
                 </span>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-gp-ink leading-[1.1] tracking-tight">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gp-ink leading-[1.15] tracking-tight">
                     Envoyez vos colis moins cher avec des <span class="text-gp-orange-dark">voyageurs vérifiés.</span>
                 </h1>
-                <p class="text-base md:text-lg text-gp-warm mt-4 leading-relaxed font-medium">
+                <p class="text-sm sm:text-base md:text-lg text-gp-warm mt-3 sm:mt-4 leading-relaxed font-medium">
                     Partagez les kilos disponibles de voyageurs entre le Sénégal, la France, l'Italie et la sous-région en toute confiance.
                 </p>
             </div>
 
             <!-- Formulaire de recherche rapide (§5.1) avec sélection des villes et pays GPsen -->
-            <div class="mt-8 bg-white/95 backdrop-blur-md p-5 md:p-6 rounded-gp border border-gp-border shadow-lg max-w-4xl">
+            <div class="mt-6 sm:mt-8 bg-white p-5 md:p-6 rounded-gp border border-gp-border shadow-md max-w-4xl">
                 @php
                     $availableCountries = \App\Models\Country::with(['cities' => fn($q) => $q->orderBy('name')])->orderBy('name')->get();
                 @endphp
