@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="p-3 bg-gp-sand/30 rounded-gp border border-gp-border/60 text-xs text-gp-warm leading-relaxed">
-                        {{ $trip->groupeur->groupeurProfile?->bio ?: 'Voyageur certifié sur la plateforme GPsen.' }}
+                        {{ $trip->groupeur->groupeurProfile?->bio ?: 'Voyageur sur la plateforme GPsen.' }}
                     </div>
 
                     <div class="flex items-center justify-between text-xs pt-2 border-t border-gp-border/60">

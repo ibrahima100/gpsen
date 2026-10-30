@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="flex items-center justify-between text-gp-warm">
-                                <span>Groupeur certifié :</span>
+                                <span>Groupeur :</span>
                                 <span class="font-bold text-gp-ink flex items-center gap-1">
                                     {{ $trip->groupeur->name }}
                                     <span class="text-emerald-700 font-bold" title="Vérifié par l'administration GPsen">✓</span>
