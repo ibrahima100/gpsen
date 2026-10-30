@@ -12,6 +12,8 @@
         </div>
         <div class="flex flex-col md:items-end justify-between gap-3">
             <div class="flex flex-wrap items-center gap-4 text-xs text-gp-border">
+                <a href="{{ route('pages.about') }}" class="hover:text-gp-orange transition font-semibold text-white">À propos de nous</a>
+                <span>•</span>
                 <a href="{{ route('legal.cgu') }}" class="hover:text-gp-orange transition">Conditions Générales</a>
                 <span>•</span>
                 <a href="{{ route('legal.privacy') }}" class="hover:text-gp-orange transition">Confidentialité (Loi 2008-12)</a>

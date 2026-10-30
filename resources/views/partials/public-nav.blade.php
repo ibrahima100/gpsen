@@ -14,6 +14,9 @@
             <a href="{{ route('home') }}#comment-ca-marche" class="px-3 py-1.5 rounded-full text-xs font-semibold text-gp-ink hover:text-gp-orange hover:bg-gp-sand transition">
                 {{ __('app.how_it_works') }}
             </a>
+            <a href="{{ route('pages.about') }}" class="px-3 py-1.5 rounded-full text-xs font-semibold transition {{ request()->routeIs('pages.about') ? 'bg-gp-orange text-white' : 'text-gp-ink hover:text-gp-orange hover:bg-gp-sand' }}">
+                À propos
+            </a>
             <a href="{{ route('trajets.index') }}" class="px-3 py-1.5 rounded-full text-xs font-semibold transition {{ request()->routeIs('trajets.*') ? 'bg-gp-orange text-white' : 'text-gp-ink hover:text-gp-orange hover:bg-gp-sand' }}">
                 {{ __('app.trips') }}
             </a>
@@ -42,6 +45,7 @@
             <span>Accueil</span>
         </a>
         <a href="{{ route('home') }}#comment-ca-marche" class="block px-3 py-1.5 rounded-gp text-sm font-semibold text-gp-ink hover:bg-gp-sand">{{ __('app.how_it_works') }}</a>
+        <a href="{{ route('pages.about') }}" class="block px-3 py-1.5 rounded-gp text-sm font-semibold {{ request()->routeIs('pages.about') ? 'bg-gp-orange text-white' : 'text-gp-ink hover:bg-gp-sand' }}">À propos</a>
         <a href="{{ route('trajets.index') }}" class="block px-3 py-1.5 rounded-gp text-sm font-semibold {{ request()->routeIs('trajets.*') ? 'bg-gp-orange text-white' : 'text-gp-ink hover:bg-gp-sand' }}">{{ __('app.trips') }}</a>
         <div class="flex items-center gap-3 pt-2">
             @auth
