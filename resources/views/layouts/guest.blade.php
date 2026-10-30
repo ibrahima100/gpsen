@@ -25,13 +25,16 @@
             <div class="hidden sm:block absolute -bottom-40 -right-24 w-[420px] h-[230px] bg-gp-ink/90 -rotate-[14deg] pointer-events-none"></div>
 
             <div class="relative z-10 max-w-xl w-full mx-auto px-4 py-6 min-h-screen flex flex-col justify-between items-center">
-                {{-- Barre supérieure avec retour accueil --}}
+                {{-- Barre supérieure avec retour accueil moderne et visible --}}
                 <div class="w-full flex items-center justify-between pb-4">
                     <a href="/" aria-label="GPsen accueil" class="inline-flex items-center">
                         <x-logo :scale="1.15" />
                     </a>
-                    <a href="/" class="text-xs sm:text-sm font-bold text-gp-warm hover:text-gp-orange transition flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 border border-gp-border">
-                        &larr; Accueil
+                    <a href="/" class="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gp-ink text-white font-bold text-xs shadow-md hover:bg-gp-orange transition-all duration-200 border border-gp-ink hover:border-gp-orange active:scale-95">
+                        <svg class="w-3.5 h-3.5 text-gp-orange group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Retour à l'accueil</span>
                     </a>
                 </div>
 

@@ -31,9 +31,15 @@
                 <x-logo />
             </a>
 
-            <nav class="hidden md:flex items-center gap-6" aria-label="Navigation">
+            <nav class="hidden md:flex items-center gap-2" aria-label="Navigation">
+                <a href="{{ route('home') }}" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 text-gp-ink hover:bg-gp-sand border border-gp-border/60 hover:border-gp-orange shadow-2xs">
+                    <svg class="w-3.5 h-3.5 text-gp-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    <span>Accueil</span>
+                </a>
                 @foreach ($links as [$route, $label])
-                    <a href="{{ route($route) }}" class="gp-link {{ request()->routeIs($route) ? '!text-gp-orange' : '' }}">{{ $label }}</a>
+                    <a href="{{ route($route) }}" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition {{ request()->routeIs($route) ? 'bg-gp-orange text-white shadow-sm' : 'text-gp-ink hover:bg-gp-sand' }}">{{ $label }}</a>
                 @endforeach
             </nav>
 
@@ -95,9 +101,15 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
-        <div x-show="open" x-cloak x-transition class="md:hidden border-t border-gp-border px-4 py-4 space-y-3 bg-gp-cream">
+        <div x-show="open" x-cloak x-transition class="md:hidden border-t border-gp-border px-4 py-4 space-y-2 bg-gp-cream">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 px-3 py-2 rounded-gp text-sm font-bold text-gp-ink hover:bg-gp-sand">
+                <svg class="w-4 h-4 text-gp-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                <span>Accueil du site</span>
+            </a>
             @foreach ($links as [$route, $label])
-                <a href="{{ route($route) }}" class="block gp-link">{{ $label }}</a>
+                <a href="{{ route($route) }}" class="block px-3 py-1.5 rounded-gp text-sm font-semibold {{ request()->routeIs($route) ? 'bg-gp-orange text-white' : 'text-gp-ink hover:bg-gp-sand' }}">{{ $label }}</a>
             @endforeach
             <a href="{{ route('profile.edit') }}" class="block gp-link">{{ __('app.profile') }}</a>
             <a href="{{ route('notifications.index') }}" class="block gp-link flex items-center justify-between">
