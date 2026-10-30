@@ -1,16 +1,16 @@
 <x-public-layout :title="__('Accueil — Groupage participatif de colis')">
-    <!-- Hero section responsive Mobile First & Desktop -->
+    <!-- Hero section avec photo de fond visible sur tous les écrans -->
     <section class="relative bg-gp-sand overflow-hidden py-10 sm:py-16 md:py-24 border-b border-gp-border">
-        {{-- Photo de fond adaptée : bien cadrée à droite sur grand écran et masquée/estompée sur mobile pour éliminer tout flou --}}
-        <div class="hidden md:block absolute inset-0 bg-cover bg-[position:85%_center]" style="background-image:url('{{ asset('images/fond.jpg') }}')"></div>
-        <div class="hidden md:block absolute inset-0 bg-gradient-to-r from-gp-sand via-gp-sand/90 to-transparent"></div>
+        {{-- Photo de fond active sur mobile ET desktop, parfaitement centrée et nette sans flou --}}
+        <div class="absolute inset-0 bg-cover bg-center sm:bg-[position:80%_center]" style="background-image:url('{{ asset('images/fond.jpg') }}')"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-gp-sand/90 via-gp-sand/80 to-gp-sand/60 sm:to-transparent"></div>
 
         {{-- Formes décoratives GPsen --}}
         <div class="hidden lg:block absolute -bottom-24 -right-20 w-[550px] h-[260px] bg-gp-orange/20 -rotate-[14deg] pointer-events-none"></div>
         <div class="hidden lg:block absolute -bottom-40 -right-24 w-[450px] h-[240px] bg-gp-ink/10 -rotate-[14deg] pointer-events-none"></div>
 
         <div class="max-w-6xl mx-auto px-4 relative z-10">
-            <div class="max-w-2xl bg-white/90 md:bg-white/80 md:backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-gp-border md:border-white/60 shadow-sm">
+            <div class="max-w-2xl bg-white/95 p-6 sm:p-8 rounded-2xl border border-gp-border shadow-sm">
                 <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white text-gp-orange-dark border border-gp-border mb-3 sm:mb-4 shadow-2xs">
                     Groupage participatif de colis
                 </span>
