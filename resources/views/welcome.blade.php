@@ -85,13 +85,18 @@
 
     <!-- Trajets récents disponibles (§5.1 : 3 à 6 cartes) -->
     <section id="trajets" class="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
-        <div class="flex items-center justify-between mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
                 <h2 class="text-2xl font-extrabold text-gp-ink tracking-tight">Prochains départs confirmés</h2>
                 <p class="text-xs text-gp-warm mt-1">Voyageurs avec kilos de bagages actuellement disponibles.</p>
             </div>
-            <a href="{{ route('trajets.index') }}" class="text-xs font-bold text-gp-orange-dark hover:underline">
-                Voir tous les trajets &rarr;
+            <a href="{{ route('trajets.index') }}" class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gp-ink text-white font-bold text-xs uppercase tracking-wider hover:bg-gp-orange shadow-md transition-all duration-200 border border-gp-ink hover:border-gp-orange self-start sm:self-auto active:scale-95">
+                <span>Voir tous les trajets</span>
+                <span class="w-5 h-5 rounded-full bg-gp-orange group-hover:bg-white text-white group-hover:text-gp-orange flex items-center justify-center transition-colors">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </span>
             </a>
         </div>
 
@@ -151,6 +156,15 @@
                     <p class="text-xs text-gp-warm mt-1">Revenez bientôt ou publiez votre propre voyage si vous êtes groupeur.</p>
                 </div>
             @endforelse
+        </div>
+
+        <div class="mt-10 text-center">
+            <a href="{{ route('trajets.index') }}" class="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gp-orange hover:bg-gp-orange-dark text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg active:scale-95">
+                <span>Consulter l'ensemble des trajets disponibles</span>
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
         </div>
     </section>
 
